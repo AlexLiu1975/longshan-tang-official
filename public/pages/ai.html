@@ -26,7 +26,7 @@
     </section>
 
     <section class="section ai-page">
-      <div class="section-heading ai-intro"><span>智慧入口</span><h2>想查什麼，從這裡開始</h2><p>目前 V1 以隴善堂既有網站資料與固定導覽邏輯提供服務，後續可再安全串接正式 AI API。</p></div>
+      <div class="section-heading ai-intro"><span>智慧入口</span><h2>想查什麼，從這裡開始</h2><p>V2 已採安全後端架構連接 AI；若 AI 暫時無法使用，系統會自動切換為隴善堂網站智慧導覽。</p></div>
 
       <div class="ai-grid" aria-label="AI 智慧服務分類">
         <button id="ai-culture" class="ai-card" type="button" data-question="我想了解信仰文化"><span class="ai-icon">📚</span><h3>AI 信仰文化問答</h3><p>協助理解神佛典故、佛道文化、傳統節慶與宗教名詞。</p><span>開始詢問 →</span></button>
@@ -38,9 +38,9 @@
 
       <div class="ai-chat-shell">
         <section class="ai-chat-panel" aria-labelledby="ai-chat-title">
-          <div class="ai-chat-head"><h2 id="ai-chat-title">問問隴善堂 AI</h2><p>V1 智慧導覽已可使用</p></div>
+          <div class="ai-chat-head"><h2 id="ai-chat-title">問問隴善堂 AI</h2><p>V2 AI 問答＋智慧導覽備援</p></div>
           <div id="ai-chat" class="ai-chat" aria-live="polite"></div>
-          <div class="ai-composer"><input id="ai-input" type="text" placeholder="例如：最近有什麼神佛聖誕？" aria-label="輸入問題" /><button id="ai-send" type="button">送出</button></div>
+          <div class="ai-composer"><input id="ai-input" type="text" placeholder="例如：觀音菩薩是誰？" aria-label="輸入問題" maxlength="800" /><button id="ai-send" type="button">送出</button></div>
         </section>
 
         <aside class="ai-side">
