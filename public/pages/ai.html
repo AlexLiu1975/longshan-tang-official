@@ -1,1 +1,60 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 智慧服務｜隴善堂</title><link rel="stylesheet" href="/styles.css"></head><body><main class="section" style="min-height:100vh;background:#fffaf3"><a href="/">← 返回隴善堂首頁</a><div class="section-heading" style="margin-top:50px"><span>AI 智慧服務</span><h2>智慧查詢與信仰導覽</h2><p>此模組已預留獨立頁面。後續可加入神佛聖誕查詢、宗教知識、活動導覽，以及以「輔助理解」為原則的 AI 服務。</p></div><div class="notice-card" style="margin-top:30px"><h3>V1 建置狀態</h3><p>入口已完成，AI API 尚未串接。正式上線前會另外設計回答範圍、資料來源與宗教內容審核規則。</p></div></main></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#541617" />
+  <meta name="description" content="隴善堂 AI 智慧服務｜信仰文化、神佛聖誕、最新公告、網站導覽與周文王先天易卦智慧入口。" />
+  <title>AI 智慧服務｜隴善堂</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/ai.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="回到首頁"><span class="brand-mark">隴</span><span><strong>隴善堂</strong><small>佛道共融・弘善教化道場</small></span></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰</button>
+    <nav id="main-nav" class="main-nav" aria-label="主要導覽">
+      <a href="/">首頁</a><a href="/pages/about.html">認識隴善堂</a><a href="/pages/news.html">最新公告</a><a href="/pages/birthdays.html">神佛聖誕</a><a href="/pages/ai.html" aria-current="page">AI 智慧服務</a><a href="/pages/divination.html">線上抽籤</a><a href="/pages/contact.html">聯絡我們</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">傳統文化 × AI 智慧科技</p>
+      <h1>AI 智慧服務</h1>
+      <p>整合隴善堂網站資訊、神佛聖誕、信仰文化、最新公告與周文王先天易卦，讓信眾用一句話快速找到需要的內容。</p>
+    </section>
+
+    <section class="section ai-page">
+      <div class="section-heading ai-intro"><span>智慧入口</span><h2>想查什麼，從這裡開始</h2><p>目前 V1 以隴善堂既有網站資料與固定導覽邏輯提供服務，後續可再安全串接正式 AI API。</p></div>
+
+      <div class="ai-grid" aria-label="AI 智慧服務分類">
+        <button id="ai-culture" class="ai-card" type="button" data-question="我想了解信仰文化"><span class="ai-icon">📚</span><h3>AI 信仰文化問答</h3><p>協助理解神佛典故、佛道文化、傳統節慶與宗教名詞。</p><span>開始詢問 →</span></button>
+        <a id="ai-birthdays" class="ai-card" href="/pages/birthdays.html"><span class="ai-icon">🗓️</span><h3>神佛聖誕查詢</h3><p>查詢隴善堂諸神佛聖誕與接下來最近的聖誕日。</p><span>查看聖誕 →</span></a>
+        <a id="ai-news" class="ai-card" href="/pages/news.html"><span class="ai-icon">📢</span><h3>最新公告與活動</h3><p>快速前往法會、重要通知、活動資訊與最新消息。</p><span>查看公告 →</span></a>
+        <button id="ai-guide" class="ai-card" type="button" data-question="請介紹隴善堂和網站服務"><span class="ai-icon">🧭</span><h3>隴善堂網站導覽</h3><p>查詢道場介紹、地址、聯絡方式、社群與網站各項功能。</p><span>開始導覽 →</span></button>
+        <a id="ai-divination" class="ai-card" href="/pages/divination.html"><span class="ai-icon">☯️</span><h3>周文王先天易卦</h3><p>一事一問、誠心起卦，查看卦象與白話輔助理解。</p><span>前往起卦 →</span></a>
+      </div>
+
+      <div class="ai-chat-shell">
+        <section class="ai-chat-panel" aria-labelledby="ai-chat-title">
+          <div class="ai-chat-head"><h2 id="ai-chat-title">問問隴善堂 AI</h2><p>V1 智慧導覽已可使用</p></div>
+          <div id="ai-chat" class="ai-chat" aria-live="polite"></div>
+          <div class="ai-composer"><input id="ai-input" type="text" placeholder="例如：最近有什麼神佛聖誕？" aria-label="輸入問題" /><button id="ai-send" type="button">送出</button></div>
+        </section>
+
+        <aside class="ai-side">
+          <div class="quick-box"><h3>快速詢問</h3><div class="quick-list"><button type="button" data-question="最近神佛聖誕">最近神佛聖誕</button><button type="button" data-question="有什麼最新公告">最新公告</button><button type="button" data-question="隴善堂在哪裡">隴善堂在哪裡</button><button type="button" data-question="我要問周文王先天易卦">我要起卦</button></div></div>
+          <div class="ai-note"><h3>使用原則</h3><p><strong>AI 提供文化資訊與網站導覽，不代表神明指示</strong>。涉及信仰儀式、重大人生或專業醫療、法律、財務決策時，請以正式專業意見與道場實際說明為準。</p></div>
+        </aside>
+      </div>
+
+      <div class="back-row"><a class="btn primary" href="/">← 返回隴善堂首頁</a></div>
+    </section>
+  </main>
+
+  <footer><strong>隴善堂</strong><p>佛道共融・弘善教化道場</p><p>敬天・禮神・行善・教化・結緣</p><small>© <span id="year"></span> 隴善堂</small></footer>
+  <script src="/app.js"></script>
+  <script type="module" src="/ai.js"></script>
+</body>
+</html>
