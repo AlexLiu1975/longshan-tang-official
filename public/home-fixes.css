@@ -1,0 +1,43 @@
+/* Homepage layout safety fixes */
+.services-section{
+  position:relative;
+  z-index:5;
+  overflow:visible !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding-bottom:96px !important;
+}
+
+.services-section .service-grid{
+  position:relative;
+  overflow:visible !important;
+  height:auto !important;
+  min-height:0 !important;
+  align-items:stretch;
+}
+
+.services-section .service-card{
+  height:auto !important;
+  min-height:210px !important;
+  overflow:visible !important;
+  padding-bottom:28px !important;
+}
+
+.services-section .service-card h3,
+.services-section .service-card p{
+  position:relative;
+  z-index:2;
+  overflow:visible !important;
+  white-space:normal !important;
+  line-height:1.5;
+}
+
+@media (max-width:1050px){
+  .services-section{padding-bottom:80px !important;}
+  .services-section .service-card{min-height:190px !important;}
+}
+
+@media (max-width:760px){
+  .services-section{padding-bottom:64px !important;}
+  .services-section .service-card{min-height:170px !important;}
+}
