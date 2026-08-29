@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /contact_messages/{messageId} {
+      allow create: if
+        request.resource.data.keys().hasOnly(['name', 'contact', 'category', 'message', 'status', 'createdAt', 'source']) &&
+        request.resource.data.name is string && request.resource.data.name.size() <= 40 &&
+        request.resource.data.contact is string && request.resource.data.contact.size() <= 100 &&
+        request.resource.data.category in ['一般詢問', '活動／法會', '網站建議', '宗教文化', 'AI 智慧服務', '線上抽籤', '其他'] &&
+        request.resource.data.message is string && request.resource.data.message.size() >= 2 && request.resource.data.message.size() <= 1000 &&
+        request.resource.data.status == 'new' &&
+        request.resource.data.source == 'official-website' &&
+        request.resource.data.createdAt == request.time;
+      allow read, update, delete: if false;
+    }
+  }
+}
