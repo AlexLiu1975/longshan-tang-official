@@ -1,4 +1,4 @@
-import { getAiResponse } from '/ai-core.js';
+import { requestAiAnswer } from '/ai-client.js';
 
 const chat = document.querySelector('#ai-chat');
 const input = document.querySelector('#ai-input');
@@ -20,15 +20,30 @@ function appendMessage(role, text, action, actionLabel) {
   }
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;
+  return { row, bubble };
 }
 
-function submitQuestion(question) {
+function setBusy(busy) {
+  input.disabled = busy;
+  send.disabled = busy;
+  send.textContent = busy ? '請稍候…' : '送出';
+}
+
+async function submitQuestion(question) {
   const text = String(question || '').trim();
-  if (!text) return;
+  if (!text || send.disabled) return;
+
   appendMessage('user', text);
-  const result = getAiResponse(text);
-  appendMessage('assistant', result.text, result.action, result.actionLabel);
   input.value = '';
+  setBusy(true);
+  const pending = appendMessage('assistant', '正在整理資料…');
+
+  const result = await requestAiAnswer(text);
+  pending.row.remove();
+  const prefix = result.fallback ? 'AI 智慧回答目前暫時無法使用，已切換為網站智慧導覽。\n\n' : '';
+  appendMessage('assistant', `${prefix}${result.answer}`, result.action, result.actionLabel);
+
+  setBusy(false);
   input.focus();
 }
 
@@ -44,4 +59,4 @@ document.querySelectorAll('[data-question]').forEach((button) => {
   button.addEventListener('click', () => submitQuestion(button.dataset.question));
 });
 
-appendMessage('assistant', '您好，我是隴善堂 AI 智慧服務 V1。您可以詢問神佛聖誕、最新公告、隴善堂資訊、信仰文化，或前往周文王先天易卦。');
+appendMessage('assistant', '您好，我是隴善堂 AI 智慧服務 V2。您可以直接詢問佛道文化、神佛典故與網站服務；若 AI 服務暫時無法使用，系統會自動切換為網站智慧導覽。');
