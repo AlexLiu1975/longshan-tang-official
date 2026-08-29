@@ -1,4 +1,8 @@
 /* Homepage layout safety fixes */
+.hero>img{
+  object-position:center 72% !important;
+}
+
 .services-section{
   position:relative;
   z-index:5;
@@ -33,11 +37,13 @@
 }
 
 @media (max-width:1050px){
+  .hero>img{object-position:center 68% !important;}
   .services-section{padding-bottom:80px !important;}
   .services-section .service-card{min-height:190px !important;}
 }
 
 @media (max-width:760px){
+  .hero>img{object-position:62% center !important;}
   .services-section{padding-bottom:64px !important;}
   .services-section .service-card{min-height:170px !important;}
 }
