@@ -1,8 +1,12 @@
 const SITE_CONFIG = {
   links: {
     lineOfficial: '',
-    lineCommunity: '',
-    googleMaps: ''
+    lineCommunity: 'https://line.me/ti/g2/07k2_TpFzH4AqLg3eoVlP-S0f8ZoWQpt0TX-1Q?utm_source=invitation&utm_medium=link_copy&utm_campaign=default',
+    googleMaps: 'https://www.google.com/maps/search/?api=1&query=22.613886087464497%2C120.39170258910214'
+  },
+  contact: {
+    address: '831 高雄市大寮區中興里捷西路51巷116號',
+    phone: '07-7813731'
   },
   services: [
     { title: '最新公告', subtitle: '掌握最新消息', icon: '📣', href: '#news' },
