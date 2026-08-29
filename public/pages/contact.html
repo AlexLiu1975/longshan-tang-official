@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#541617" />
+  <meta name="description" content="聯絡隴善堂｜地址、電話、LINE 信眾交流社群與線上留言。" />
+  <title>聯絡我們｜隴善堂</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="返回隴善堂首頁"><span class="brand-mark">隴</span><span><strong>隴善堂</strong><small>佛道共融・弘善教化道場</small></span></a>
+    <a class="btn contact-home-btn" href="/">返回首頁</a>
+  </header>
+
+  <main class="contact-page">
+    <section class="section contact-hero">
+      <div class="section-heading">
+        <span>聯絡我們</span>
+        <h1>與隴善堂結緣交流</h1>
+        <p>如有參拜、活動、網站服務或其他意見，歡迎透過電話、LINE 社群或下方留言表單與我們聯絡。</p>
+      </div>
+    </section>
+
+    <section class="section contact-content">
+      <div class="contact-info-grid">
+        <article class="contact-info-card"><span class="contact-icon">📍</span><h2>隴善堂地址</h2><p>831 高雄市大寮區中興里<br>捷西路51巷116號</p><a class="btn primary" data-site-link="googleMaps" href="#">開啟 Google 地圖</a></article>
+        <article class="contact-info-card"><span class="contact-icon">☎️</span><h2>聯絡電話</h2><p><a class="contact-phone" href="tel:077813731">07-7813731</a></p><a class="btn primary" href="tel:077813731">撥打電話</a></article>
+        <article class="contact-info-card"><span class="contact-icon">👥</span><h2>信眾交流社群</h2><p>加入隴善堂 LINE 信眾交流社群，接收公告並與信眾交流。</p><a class="btn primary" data-site-link="lineCommunity" href="#">加入 LINE 社群</a></article>
+      </div>
+    </section>
+
+    <section class="section contact-message-section">
+      <div class="contact-form-wrap">
+        <div class="section-heading"><span>線上留言</span><h2>留言給隴善堂</h2><p>請留下您的意見或問題。若希望收到回覆，請留下可聯絡您的方式。</p></div>
+        <form id="contact-form" class="contact-form">
+          <div class="form-row">
+            <label>稱呼（選填）<input id="contact-name" name="name" type="text" maxlength="40" autocomplete="name" placeholder="您的稱呼"></label>
+            <label>聯絡方式（選填）<input id="contact-method" name="contact" type="text" maxlength="100" placeholder="LINE、電話或 Email"></label>
+          </div>
+          <label>意見類型
+            <select id="contact-category" name="category" required>
+              <option value="一般詢問">一般詢問</option><option value="活動／法會">活動／法會</option><option value="網站建議">網站建議</option><option value="宗教文化">宗教文化</option><option value="AI 智慧服務">AI 智慧服務</option><option value="線上抽籤">線上抽籤</option><option value="其他">其他</option>
+            </select>
+          </label>
+          <label>留言內容 <span class="required-mark">*</span><textarea id="contact-message" name="message" required minlength="2" maxlength="1000" rows="7" placeholder="請輸入您的留言（最多 1000 字）"></textarea></label>
+          <label class="contact-honeypot" aria-hidden="true">請勿填寫<input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off"></label>
+          <p class="form-note">送出留言即表示您同意隴善堂為回覆本次詢問而使用您主動提供的資料。請勿填寫身分證字號、金融帳號等敏感資訊。</p>
+          <button id="contact-submit" class="btn primary contact-submit" type="submit">送出留言</button>
+          <p id="contact-status" class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer><strong>隴善堂</strong><p>佛道共融・弘善教化道場</p><p>敬天・禮神・行善・教化・結緣</p><small>© <span id="year"></span> 隴善堂</small></footer>
+  <script src="/site-config.js"></script>
+  <script src="/contact-page.js"></script>
+  <script type="module" src="/firebase-contact.js"></script>
+</body>
+</html>
