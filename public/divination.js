@@ -18,7 +18,7 @@ export function validateDivinationData(data){
 if(typeof document!=="undefined"){
   const state={hundreds:null,tens:null,ones:null,isDrawing:false,data:null};
   const places=["hundreds","tens","ones"];
-  const labels={hundreds:"百位",tens:"十位",ones:"個位"};
+  const labels={hundreds:"第一支",tens:"第二支",ones:"第三支"};
   const buttons=Object.fromEntries(places.map(p=>[p,document.querySelector(`#draw-${p}`)]));
   const reset=document.querySelector("#reset-divination");
   const codeEl=document.querySelector("#hexagram-code");
