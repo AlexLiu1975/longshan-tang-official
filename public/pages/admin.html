@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#541617" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>隴善堂管理後台</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="admin-body">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="返回隴善堂首頁"><span class="brand-mark">隴</span><span><strong>隴善堂管理後台</strong><small>Administrator</small></span></a>
+    <a class="btn contact-home-btn" href="/">返回官網</a>
+  </header>
+
+  <main class="admin-page">
+    <section id="admin-login" class="admin-login-card">
+      <span class="admin-lock">🔐</span>
+      <h1>管理員登入</h1>
+      <p>僅限隴善堂授權管理員使用。</p>
+      <button id="google-login" class="btn primary" type="button">使用 Google 帳號登入</button>
+      <p id="login-status" class="contact-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="admin-app" class="admin-shell" hidden>
+      <div class="admin-topbar">
+        <div><span class="section-heading"><span>管理中心</span></span><h1>隴善堂管理後台</h1><p id="admin-user"></p></div>
+        <button id="admin-logout" class="btn admin-secondary" type="button">登出</button>
+      </div>
+
+      <div class="admin-tabs" role="tablist" aria-label="後台功能">
+        <button class="admin-tab active" data-tab="messages" type="button">📩 信眾留言</button>
+        <button class="admin-tab" data-tab="news" type="button">📣 最新公告</button>
+      </div>
+
+      <section id="tab-messages" class="admin-panel">
+        <div class="admin-panel-head"><div><h2>信眾留言</h2><p>查看網站送來的意見，並更新處理狀態。</p></div><button id="refresh-messages" class="btn admin-secondary" type="button">重新整理</button></div>
+        <div id="message-summary" class="admin-summary-grid"></div>
+        <div id="messages-list" class="admin-list"><p class="admin-empty">正在載入留言…</p></div>
+      </section>
+
+      <section id="tab-news" class="admin-panel" hidden>
+        <div class="admin-panel-head"><div><h2>最新公告管理</h2><p>新增、編輯、發布、置頂或刪除官網公告。</p></div></div>
+        <form id="news-form" class="admin-form">
+          <input id="news-id" type="hidden" />
+          <div class="form-row">
+            <label>公告標題<input id="news-title" type="text" maxlength="120" required></label>
+            <label>分類<select id="news-category"><option>一般消息</option><option>法會活動</option><option>神佛聖誕</option><option>重要通知</option></select></label>
+          </div>
+          <label>摘要<input id="news-summary" type="text" maxlength="220" required></label>
+          <label>完整內容<textarea id="news-content" rows="7" maxlength="5000" required></textarea></label>
+          <div class="admin-checks">
+            <label><input id="news-published" type="checkbox" checked> 發布到官網</label>
+            <label><input id="news-pinned" type="checkbox"> 置頂公告</label>
+          </div>
+          <div class="admin-actions"><button id="news-save" class="btn primary" type="submit">儲存公告</button><button id="news-cancel" class="btn admin-secondary" type="button" hidden>取消編輯</button></div>
+          <p id="news-status" class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+        <div id="news-admin-list" class="admin-list"><p class="admin-empty">正在載入公告…</p></div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="/firebase-admin.js"></script>
+</body>
+</html>
