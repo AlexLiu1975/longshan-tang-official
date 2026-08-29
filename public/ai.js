@@ -4,12 +4,60 @@ const chat = document.querySelector('#ai-chat');
 const input = document.querySelector('#ai-input');
 const send = document.querySelector('#ai-send');
 
+function appendInlineMarkdown(container, text) {
+  const parts = String(text).split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+  for (const part of parts) {
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      const strong = document.createElement('strong');
+      strong.textContent = part.slice(2, -2);
+      container.appendChild(strong);
+    } else {
+      container.appendChild(document.createTextNode(part));
+    }
+  }
+}
+
+function renderAssistantText(bubble, text) {
+  const lines = String(text).split('\n');
+  let list = null;
+
+  for (const rawLine of lines) {
+    const line = rawLine.trimEnd();
+    const bulletMatch = line.match(/^\s*[-•]\s+(.+)$/);
+
+    if (bulletMatch) {
+      if (!list) {
+        list = document.createElement('ul');
+        bubble.appendChild(list);
+      }
+      const item = document.createElement('li');
+      appendInlineMarkdown(item, bulletMatch[1]);
+      list.appendChild(item);
+      continue;
+    }
+
+    list = null;
+    if (!line.trim()) {
+      bubble.appendChild(document.createElement('br'));
+      continue;
+    }
+
+    const block = document.createElement('div');
+    appendInlineMarkdown(block, line);
+    bubble.appendChild(block);
+  }
+}
+
 function appendMessage(role, text, action, actionLabel) {
   const row = document.createElement('div');
   row.className = `ai-message ${role}`;
   const bubble = document.createElement('div');
   bubble.className = 'ai-bubble';
-  bubble.textContent = text;
+  if (role === 'assistant') {
+    renderAssistantText(bubble, text);
+  } else {
+    bubble.textContent = text;
+  }
   row.appendChild(bubble);
   if (action) {
     const link = document.createElement('a');
