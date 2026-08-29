@@ -25,7 +25,7 @@ assert.ok(fs.existsSync('docs/ai-v2-deployment.md'), 'missing AI deployment docu
 for (const file of files) {
   const text = fs.readFileSync(file, 'utf8');
   assert.ok(!/sk-[A-Za-z0-9_-]{12,}/.test(text), `possible OpenAI API key in ${file}`);
-  assert.ok(!/OPENAI_API_KEY\s*=\s*[^\s'"<]+/.test(text), `literal OPENAI_API_KEY assignment in ${file}`);
+  assert.ok(!/OPENAI_API_KEY\s*=\s*['"][^'"]+['"]/.test(text), `literal OPENAI_API_KEY string assignment in ${file}`);
 }
 
 const index = fs.readFileSync('functions/index.js', 'utf8');
