@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#541617" />
+  <meta name="description" content="隴善堂最新公告｜法會活動、神佛聖誕、重要通知與一般消息。" />
+  <title>最新公告｜隴善堂</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .page-hero{padding:72px clamp(20px,7vw,110px) 58px;background:linear-gradient(145deg,#3d1012,#741d20);color:#fff}
+    .page-hero .eyebrow{margin:0 0 14px}.page-hero h1{margin:0;color:#f4d78d;font-size:clamp(2.6rem,6vw,4.8rem);letter-spacing:.08em;line-height:1.15}.page-hero p{max-width:760px;margin:18px 0 0;color:#eaded7;font-size:1.05rem}
+    .news-page{background:#fffaf3;min-height:60vh}.news-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 34px}.filter-btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer;font:inherit}.filter-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
+    .news-status{padding:24px;border:1px solid var(--line);border-radius:18px;background:#fff}.news-list{display:grid;gap:18px}.news-item{padding:0;overflow:hidden}.news-item summary{list-style:none;cursor:pointer;padding:26px 28px}.news-item summary::-webkit-details-marker{display:none}.news-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px;color:var(--red);font-weight:700;font-size:.92rem}.news-badge{display:inline-block;padding:3px 10px;border-radius:999px;background:#f5e8cc;color:#6b4814;font-size:.8rem}.news-pin{color:#9c6511}.news-item h2{margin:5px 0 8px;font-size:clamp(1.3rem,2.5vw,1.8rem)}.news-summary{margin:0;color:#6c5d55}.news-content{padding:0 28px 28px;border-top:1px solid var(--line);white-space:pre-wrap}.news-content p{margin:22px 0 0}.news-open-hint{display:inline-block;margin-top:13px;color:#94651b;font-size:.88rem}.back-row{margin-top:34px;text-align:center}
+    @media (max-width:760px){.page-hero{padding:52px 20px 42px}.news-item summary,.news-content{padding-left:20px;padding-right:20px}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="回到首頁">
+      <span class="brand-mark">隴</span>
+      <span><strong>隴善堂</strong><small>佛道共融・弘善教化道場</small></span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰</button>
+    <nav id="main-nav" class="main-nav" aria-label="主要導覽">
+      <a href="/">首頁</a>
+      <a href="/pages/news.html" aria-current="page">最新公告</a>
+      <a href="/pages/birthdays.html">神佛聖誕</a>
+      <a href="/pages/ai.html">AI 智慧服務</a>
+      <a href="/pages/divination.html">線上抽籤</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">最新公告</p>
+      <h1>隴善堂最新消息</h1>
+      <p>法會活動、重要通知、神佛聖誕與一般消息，皆以本頁公告內容為準。</p>
+    </section>
+
+    <section class="section news-page" aria-labelledby="news-page-title">
+      <div class="section-heading">
+        <span>公告中心</span>
+        <h2 id="news-page-title">全部公告</h2>
+        <p>置頂公告優先顯示，其餘依發布日期由新到舊排列。點選公告即可展開完整內容。</p>
+      </div>
+
+      <div id="news-toolbar" class="news-toolbar" aria-label="公告分類篩選" hidden></div>
+      <div id="news-status" class="news-status">正在載入最新公告…</div>
+      <div id="news-list" class="news-list" hidden></div>
+
+      <div class="back-row"><a class="btn primary" href="/">← 返回隴善堂首頁</a></div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>隴善堂</strong>
+    <p>佛道共融・弘善教化道場</p>
+    <p>敬天・禮神・行善・教化・結緣</p>
+    <small>© <span id="year"></span> 隴善堂</small>
+  </footer>
+
+  <script src="/app.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDkATNhqg_kIDcjT4KdUDNuRJk1o5VqPio",
+      authDomain: "longshan-tang-official.firebaseapp.com",
+      projectId: "longshan-tang-official",
+      storageBucket: "longshan-tang-official.firebasestorage.app",
+      messagingSenderId: "1001844784486",
+      appId: "1:1001844784486:web:284e88cb6a957d4c1d5ca7"
+    };
+
+    const db = getFirestore(initializeApp(firebaseConfig));
+    const listEl = document.querySelector("#news-list");
+    const statusEl = document.querySelector("#news-status");
+    const toolbarEl = document.querySelector("#news-toolbar");
+    let allNews = [];
+
+    const escapeHtml = (value = "") => String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+    function formatDate(timestamp) {
+      if (!timestamp || typeof timestamp.toDate !== "function") return "";
+      return new Intl.DateTimeFormat("zh-TW", { year: "numeric", month: "long", day: "numeric" }).format(timestamp.toDate());
+    }
+
+    function sortNews(items) {
+      return items.sort((a, b) => {
+        if (Boolean(a.pinned) !== Boolean(b.pinned)) return Number(Boolean(b.pinned)) - Number(Boolean(a.pinned));
+        return (b.publishDate?.toMillis?.() || 0) - (a.publishDate?.toMillis?.() || 0);
+      });
+    }
+
+    function renderNews(category = "全部") {
+      const items = category === "全部" ? allNews : allNews.filter(item => (item.category || "一般消息") === category);
+      listEl.innerHTML = "";
+
+      if (!items.length) {
+        listEl.hidden = true;
+        statusEl.hidden = false;
+        statusEl.textContent = "此分類目前尚無公告。";
+        return;
+      }
+
+      items.forEach(item => {
+        const details = document.createElement("details");
+        details.className = "notice-card news-item";
+        const categoryText = escapeHtml(item.category || "一般消息");
+        const title = escapeHtml(item.title || "隴善堂公告");
+        const summary = escapeHtml(item.summary || item.content || "");
+        const content = escapeHtml(item.content || item.summary || "");
+        const pin = item.pinned ? '<span class="news-pin">📌 置頂</span>' : "";
+
+        details.innerHTML = `
+          <summary>
+            <div class="news-meta">${pin}<span>${escapeHtml(formatDate(item.publishDate))}</span><span class="news-badge">${categoryText}</span></div>
+            <h2>${title}</h2>
+            <p class="news-summary">${summary}</p>
+            <span class="news-open-hint">查看完整內容 ↓</span>
+          </summary>
+          <div class="news-content"><p>${content}</p></div>
+        `;
+        listEl.appendChild(details);
+      });
+
+      statusEl.hidden = true;
+      listEl.hidden = false;
+    }
+
+    function buildFilters() {
+      const categories = ["全部", ...new Set(allNews.map(item => item.category || "一般消息"))];
+      toolbarEl.innerHTML = "";
+      categories.forEach((category, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `filter-btn${index === 0 ? " active" : ""}`;
+        button.textContent = category;
+        button.addEventListener("click", () => {
+          toolbarEl.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+          button.classList.add("active");
+          renderNews(category);
+        });
+        toolbarEl.appendChild(button);
+      });
+      toolbarEl.hidden = categories.length <= 2;
+    }
+
+    async function loadNews() {
+      try {
+        const snapshot = await getDocs(query(collection(db, "news"), where("published", "==", true)));
+        allNews = sortNews(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        if (!allNews.length) {
+          statusEl.textContent = "目前尚無已發布公告。";
+          return;
+        }
+        buildFilters();
+        renderNews();
+      } catch (error) {
+        console.error("讀取公告失敗：", error);
+        statusEl.textContent = "目前暫時無法取得公告，請稍後再試。";
+      }
+    }
+
+    loadNews();
+  </script>
+</body>
+</html>
