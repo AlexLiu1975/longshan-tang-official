@@ -2,12 +2,24 @@
   "firestore": {
     "rules": "firestore.rules"
   },
+  "functions": {
+    "source": "functions"
+  },
   "hosting": {
     "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/ai",
+        "function": {
+          "functionId": "askLongshanAi",
+          "region": "asia-east1"
+        }
+      }
     ]
   }
 }
