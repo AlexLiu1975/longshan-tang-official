@@ -72,12 +72,13 @@ if(typeof document!=="undefined"){
     const hit=lookupHexagram(state.data,code);
     result.hidden=false;
     if(hit){
-      result.innerHTML=`<h2>${hit.name}・${code}</h2><p class="result-text">${hit.text}</p>`;
+      result.innerHTML=`<div class="result-slip"><div class="result-seal">隴<br>善<br>堂</div><p class="result-kicker">周文王先天易卦</p><div class="result-code">卦碼 ${code}</div><h2>${hit.name}</h2><div class="result-divider"><span>卦辭</span></div><p class="result-text">${hit.text}</p><p class="result-note">心誠則靈・敬慎參詳</p></div>`;
     }else{
       result.innerHTML=`<h2>${code}</h2><p>此卦資料尚待校對，請重新占卦或稍後再試。</p>`;
       console.error('Missing divination code:',code);
     }
     reset.hidden=false;
+    result.scrollIntoView({behavior:'smooth',block:'center'});
   }
 
   function resetAll(){
