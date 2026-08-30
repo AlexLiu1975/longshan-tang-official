@@ -108,14 +108,17 @@
     const upcoming = findUpcoming(4);
     if (!upcoming.length) return;
 
-    grid.innerHTML = upcoming.map(item => `
-      <div>
-        <small style="display:block;margin-bottom:8px;color:#9a6b2f;font-weight:700;letter-spacing:.08em;">${item.type}</small>
-        <strong>${item.lunar}${item.isToday ? '・今日' : ''}</strong>
-        <span>${item.name}</span>
-        <small style="display:block;margin-top:8px;color:#8a6f60;">國曆 ${formatGregorian(item.date)}</small>
-      </div>
-    `).join('');
+    grid.innerHTML = upcoming.map(item => {
+      const typeClass = item.type === '誦經祈福' ? 'is-prayer' : 'is-birthday';
+      return `
+        <div class="holy-event-card ${typeClass}">
+          <small class="event-type">${item.type}</small>
+          <strong>${item.lunar}${item.isToday ? '・今日' : ''}</strong>
+          <span>${item.name}</span>
+          <small class="gregorian-date">國曆 ${formatGregorian(item.date)}</small>
+        </div>
+      `;
+    }).join('');
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render);
