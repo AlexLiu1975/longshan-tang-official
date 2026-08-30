@@ -7,102 +7,21 @@
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="/brand-calligraphy.css?v=20260830-2">
   <style>
-    body{background:#f8f1e3;color:#35231f}
-    .celebration-hero{
-      position:relative;
-      overflow:hidden;
-      padding:72px 20px 58px;
-      text-align:center;
-      border-top:3px solid #6f1d1b;
-      border-bottom:1px solid rgba(111,29,27,.18);
-      background:
-        radial-gradient(circle at 50% 22%, rgba(213,164,63,.22), transparent 33%),
-        linear-gradient(135deg, rgba(255,255,255,.9), rgba(246,232,201,.95));
-    }
-    .celebration-hero::before,
-    .celebration-hero::after{
-      content:"";
-      position:absolute;
-      width:320px;
-      height:320px;
-      border:1px solid rgba(111,29,27,.09);
-      border-radius:50%;
-      background:
-        repeating-radial-gradient(circle at center, transparent 0 24px, rgba(154,107,47,.045) 25px 27px);
-      pointer-events:none;
-    }
-    .celebration-hero::before{left:-120px;top:-130px}
-    .celebration-hero::after{right:-120px;bottom:-160px}
+    body{background:#fffaf0;color:#35231f}
+    .celebration-hero{padding:64px 20px 48px;text-align:center;background:linear-gradient(135deg,#fffdf8,#f8ecd2);border-top:3px solid #6f1d1b;border-bottom:1px solid #ead7b2}
     .celebration-kicker{color:#7b2522;font-weight:800;letter-spacing:.16em;margin-bottom:10px}
-    .celebration-hero h1{font-size:clamp(2.4rem,6vw,4.6rem);margin:0 0 16px}
+    .celebration-hero h1{font-size:clamp(2.5rem,6vw,4.6rem);margin:0 0 14px}
     .celebration-hero p{margin:0 auto;max-width:760px;line-height:1.9;color:#745e55;font-size:1.08rem}
-
-    .celebration-page{max-width:1100px;margin:0 auto;padding:54px 20px 88px}
-    .section-title{margin:0 0 24px}
-    .section-title span{display:block;color:#9a6b2f;font-weight:800;letter-spacing:.12em;margin-bottom:7px}
-    .section-title h2{margin:0;font-size:clamp(1.8rem,4vw,2.5rem)}
-    .section-title p{margin:10px 0 0;color:#7e6a60;line-height:1.8}
-
-    .prayer-card{
-      position:relative;
-      overflow:hidden;
-      display:grid;
-      grid-template-columns:110px 1fr;
-      gap:22px;
-      align-items:center;
-      padding:28px;
-      margin-bottom:54px;
-      border:1px solid rgba(171,121,37,.28);
-      border-radius:22px;
-      background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(252,244,225,.94));
-      box-shadow:0 16px 40px rgba(82,52,29,.08);
-    }
-    .prayer-seal{
-      width:92px;height:92px;border-radius:50%;display:grid;place-items:center;
-      background:#6f1d1b;color:#f4d58d;border:5px double rgba(244,213,141,.85);
-      font-size:1.15rem;font-weight:800;line-height:1.25;text-align:center;
-      box-shadow:0 8px 22px rgba(111,29,27,.18)
-    }
-    .prayer-card h3{margin:0 0 8px;font-size:1.45rem;color:#6f1d1b}
-    .prayer-card p{margin:0;line-height:1.85;color:#6e5a51}
-    .prayer-note{margin-top:10px;font-weight:700;color:#9a5a2f}
-
-    .birthday-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-    .birthday-item{
-      position:relative;
-      display:grid;
-      grid-template-columns:140px 1fr;
-      gap:20px;
-      align-items:center;
-      min-height:88px;
-      padding:20px 22px 20px 26px;
-      border:1px solid rgba(171,121,37,.22);
-      border-radius:18px;
-      background:rgba(255,255,255,.82);
-      box-shadow:0 10px 30px rgba(82,52,29,.06);
-    }
-    .birthday-item::before{
-      content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;
-      background:linear-gradient(#7b2522,#c39232)
-    }
-    .lunar-date{font-weight:800;color:#7b2522;font-size:1.04rem}
-    .deity-name{font-size:1.08rem;line-height:1.65}
-
-    .birthday-note{
-      margin-top:34px;padding:20px 22px;border-radius:16px;
-      border:1px dashed rgba(154,107,47,.34);
-      background:rgba(255,249,235,.74);line-height:1.9;color:#745e55
-    }
-    .back-home{display:inline-block;margin-top:34px;text-decoration:none;font-weight:700;color:#7b2522}
-
-    @media(max-width:760px){
-      .celebration-hero{padding:54px 18px 44px}
-      .celebration-page{padding:40px 16px 70px}
-      .prayer-card{grid-template-columns:1fr;text-align:center;padding:24px 20px}
-      .prayer-seal{margin:0 auto}
-      .birthday-list{grid-template-columns:1fr}
-      .birthday-item{grid-template-columns:1fr;gap:6px;padding:18px 18px 18px 22px}
-    }
+    .celebration-page{max-width:1120px;margin:0 auto;padding:52px 20px 88px}
+    .month-section{margin:0 0 42px;border-left:3px solid #c39232;padding-left:24px}
+    .month-title{display:inline-block;margin:0 0 10px;padding:11px 26px;border-radius:999px;background:#6f1d1b;color:#f7dfa0;font-size:1.35rem;font-weight:800;letter-spacing:.08em;box-shadow:0 8px 20px rgba(111,29,27,.14)}
+    .event-row{display:grid;grid-template-columns:210px 1fr;gap:28px;align-items:center;padding:20px 18px;border-bottom:1px solid rgba(195,146,50,.45);font-size:1.08rem;line-height:1.65}
+    .event-date{font-weight:800;color:#9a5a2f}
+    .event-name{color:#35231f}
+    .event-note{font-size:.94rem;color:#8a6f60;margin-left:8px}
+    .birthday-note{margin-top:44px;padding:20px 22px;border-radius:16px;border:1px dashed rgba(154,107,47,.34);background:#fff7e6;line-height:1.9;color:#745e55}
+    .back-home{display:inline-block;margin-top:30px;text-decoration:none;font-weight:700;color:#7b2522}
+    @media(max-width:680px){.celebration-hero{padding:48px 18px 38px}.celebration-page{padding:38px 15px 70px}.month-section{padding-left:14px;margin-bottom:34px}.month-title{font-size:1.15rem;padding:9px 20px}.event-row{grid-template-columns:1fr;gap:5px;padding:16px 10px}.event-note{display:block;margin:3px 0 0}}
   </style>
 </head>
 <body>
@@ -115,42 +34,65 @@
   <section class="celebration-hero">
     <div class="celebration-kicker">隴善堂歲時行事</div>
     <h1>年度慶典</h1>
-    <p>恭錄本堂奉祀諸神佛聖誕，以及每月例行誦經祈福。日期均以農曆為準，年度法會與特別慶典將依實際公告補充。</p>
+    <p>神佛聖誕・誦經祈福・年度法會<br>日期均以農曆為準</p>
   </section>
 
   <main class="celebration-page">
-    <section aria-labelledby="prayer-title">
-      <div class="section-title"><span>例行行事</span><h2 id="prayer-title">初一・十五誦經祈福</h2><p>每逢農曆初一、十五舉行例行誦經祈福。</p></div>
-      <div class="prayer-card">
-        <div class="prayer-seal">誦經<br>祈福</div>
-        <div><h3>每月農曆初一、十五</h3><p>敬神禮佛、誦經祈福，祈願闔家平安、福慧增長。</p><div class="prayer-note">※ 農曆七月初一、七月十五不舉行誦經祈福。</div></div>
-      </div>
+    <section class="month-section">
+      <h2 class="month-title">農曆每月</h2>
+      <div class="event-row"><div class="event-date">每月初一、十五</div><div class="event-name">誦經祈福 <span class="event-note">（農曆七月初一、十五除外）</span></div></div>
     </section>
 
-    <section aria-labelledby="birthday-title">
-      <div class="section-title"><span>神佛聖誕</span><h2 id="birthday-title">隴善堂諸神佛聖誕日</h2><p>依本堂奉祀諸神佛聖誕資料整理。</p></div>
-      <div class="birthday-list">
-        <div class="birthday-item"><div class="lunar-date">正月初九日</div><div class="deity-name">玉皇大天尊</div></div>
-        <div class="birthday-item"><div class="lunar-date">二月初二日</div><div class="deity-name">福德正神</div></div>
-        <div class="birthday-item"><div class="lunar-date">二月十五日</div><div class="deity-name">太上道祖</div></div>
-        <div class="birthday-item"><div class="lunar-date">二月十九日</div><div class="deity-name">觀音佛祖、如來佛祖</div></div>
-        <div class="birthday-item"><div class="lunar-date">四月十八日</div><div class="deity-name">碧霞元君、紫微大帝</div></div>
-        <div class="birthday-item"><div class="lunar-date">四月廿五日</div><div class="deity-name">二郎神君</div></div>
-        <div class="birthday-item"><div class="lunar-date">四月廿六日</div><div class="deity-name">李府千歲、飛虎將軍、虎爺公</div></div>
-        <div class="birthday-item"><div class="lunar-date">四月廿七日</div><div class="deity-name">范府千歲</div></div>
-        <div class="birthday-item"><div class="lunar-date">五月初九日</div><div class="deity-name">鳳陽老母</div></div>
-        <div class="birthday-item"><div class="lunar-date">五月十八日</div><div class="deity-name">張府天師</div></div>
-        <div class="birthday-item"><div class="lunar-date">六月十八日</div><div class="deity-name">池府千歲</div></div>
-        <div class="birthday-item"><div class="lunar-date">六月廿四日</div><div class="deity-name">關聖帝君</div></div>
-        <div class="birthday-item"><div class="lunar-date">七月初七日</div><div class="deity-name">註生娘娘</div></div>
-        <div class="birthday-item"><div class="lunar-date">七月廿九日</div><div class="deity-name">地藏王菩薩</div></div>
-        <div class="birthday-item"><div class="lunar-date">九月初九日</div><div class="deity-name">中壇元帥、太子元帥</div></div>
-        <div class="birthday-item"><div class="lunar-date">九月十五日</div><div class="deity-name">吳府千歲</div></div>
-        <div class="birthday-item"><div class="lunar-date">十月廿四日</div><div class="deity-name">朱府千歲</div></div>
-      </div>
+    <section class="month-section">
+      <h2 class="month-title">農曆正月</h2>
+      <div class="event-row"><div class="event-date">正月初九日</div><div class="event-name">玉皇大天尊</div></div>
     </section>
 
-    <div class="birthday-note">※ 本頁以隴善堂現有奉祀與例行行事資料整理；神佛聖誕日期均以農曆計。年度法會、普渡及其他特別慶典可於日後依實際日期增列。</div>
+    <section class="month-section">
+      <h2 class="month-title">農曆二月</h2>
+      <div class="event-row"><div class="event-date">二月初二日</div><div class="event-name">福德正神</div></div>
+      <div class="event-row"><div class="event-date">二月十五日</div><div class="event-name">太上道祖</div></div>
+      <div class="event-row"><div class="event-date">二月十九日</div><div class="event-name">觀音佛祖、如來佛祖</div></div>
+    </section>
+
+    <section class="month-section">
+      <h2 class="month-title">農曆四月</h2>
+      <div class="event-row"><div class="event-date">四月十八日</div><div class="event-name">碧霞元君、紫微大帝</div></div>
+      <div class="event-row"><div class="event-date">四月廿五日</div><div class="event-name">二郎神君</div></div>
+      <div class="event-row"><div class="event-date">四月廿六日</div><div class="event-name">李府千歲 <span class="event-note">飛虎將軍、虎爺公</span></div></div>
+      <div class="event-row"><div class="event-date">四月廿七日</div><div class="event-name">范府千歲</div></div>
+    </section>
+
+    <section class="month-section">
+      <h2 class="month-title">農曆五月</h2>
+      <div class="event-row"><div class="event-date">五月初九日</div><div class="event-name">鳳陽老母</div></div>
+      <div class="event-row"><div class="event-date">五月十八日</div><div class="event-name">張府天師</div></div>
+    </section>
+
+    <section class="month-section">
+      <h2 class="month-title">農曆六月</h2>
+      <div class="event-row"><div class="event-date">六月十八日</div><div class="event-name">池府千歲</div></div>
+      <div class="event-row"><div class="event-date">六月廿四日</div><div class="event-name">關聖帝君</div></div>
+    </section>
+
+    <section class="month-section">
+      <h2 class="month-title">農曆七月</h2>
+      <div class="event-row"><div class="event-date">七月初七日</div><div class="event-name">註生娘娘</div></div>
+      <div class="event-row"><div class="event-date">七月廿九日</div><div class="event-name">地藏王菩薩</div></div>
+    </section>
+
+    <section class="month-section">
+      <h2 class="month-title">農曆九月</h2>
+      <div class="event-row"><div class="event-date">九月初九日</div><div class="event-name">中壇元帥、太子元帥</div></div>
+      <div class="event-row"><div class="event-date">九月十五日</div><div class="event-name">吳府千歲</div></div>
+    </section>
+
+    <section class="month-section">
+      <h2 class="month-title">農曆十月</h2>
+      <div class="event-row"><div class="event-date">十月廿四日</div><div class="event-name">朱府千歲</div></div>
+    </section>
+
+    <div class="birthday-note">※ 本表依隴善堂奉祀諸神佛聖誕及例行行事資料整理。未列月份表示目前無固定聖誕或慶典資料；年度法會、中元普渡及其他特別慶典，可依本堂實際公告增列。</div>
     <a class="back-home" href="../index.html">← 返回隴善堂首頁</a>
   </main>
 
