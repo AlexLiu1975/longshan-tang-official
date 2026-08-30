@@ -36,14 +36,127 @@
   line-height:1.5;
 }
 
+/* 年度慶典：淡雅宮廟紋理與活動卡片 */
+#holy-days{
+  position:relative;
+  overflow:hidden;
+  border-top:3px solid rgba(100,27,29,.9);
+  border-bottom:3px solid rgba(100,27,29,.9);
+  background:
+    radial-gradient(circle at 50% 42%,rgba(218,171,78,.18) 0,rgba(218,171,78,.08) 22%,transparent 52%),
+    linear-gradient(135deg,rgba(100,27,29,.045) 25%,transparent 25%) 0 0/44px 44px,
+    linear-gradient(225deg,rgba(100,27,29,.045) 25%,transparent 25%) 0 0/44px 44px,
+    linear-gradient(315deg,rgba(199,154,66,.055) 25%,transparent 25%) 22px 22px/44px 44px,
+    linear-gradient(45deg,rgba(199,154,66,.055) 25%,transparent 25%) 22px 22px/44px 44px,
+    #f8f1e3;
+}
+
+#holy-days::before,
+#holy-days::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  border:1px solid rgba(199,154,66,.24);
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  opacity:.65;
+}
+
+#holy-days::before{left:-95px;top:-95px;box-shadow:0 0 0 22px rgba(199,154,66,.035),0 0 0 44px rgba(100,27,29,.025)}
+#holy-days::after{right:-95px;bottom:-95px;box-shadow:0 0 0 22px rgba(199,154,66,.035),0 0 0 44px rgba(100,27,29,.025)}
+
+#holy-days .section-heading,
+#holy-days .holy-grid,
+#holy-days > div:last-child{
+  position:relative;
+  z-index:1;
+}
+
+#holy-days .section-heading span{
+  color:#7b2023;
+}
+
+#holy-days .section-heading h2{
+  color:#3b1716;
+}
+
+#holy-days .section-heading p{
+  color:#745f53;
+}
+
+#upcoming-holy-days > .holy-event-card{
+  position:relative;
+  min-height:190px;
+  padding:26px;
+  overflow:hidden;
+  border:1px solid rgba(199,154,66,.46);
+  background:rgba(255,252,246,.9);
+  box-shadow:0 16px 34px rgba(82,40,25,.09);
+  backdrop-filter:blur(4px);
+}
+
+#upcoming-holy-days > .holy-event-card::after{
+  content:"";
+  position:absolute;
+  right:-34px;
+  bottom:-34px;
+  width:105px;
+  height:105px;
+  border:1px solid rgba(199,154,66,.14);
+  border-radius:50%;
+  box-shadow:0 0 0 13px rgba(199,154,66,.03),0 0 0 26px rgba(100,27,29,.02);
+}
+
+#upcoming-holy-days .event-type{
+  display:inline-block;
+  margin-bottom:11px;
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid rgba(199,154,66,.42);
+  background:#f8edd4;
+  color:#82551d;
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+
+#upcoming-holy-days .holy-event-card.is-prayer .event-type{
+  background:#f2e6cb;
+  color:#6f4b1f;
+}
+
+#upcoming-holy-days .holy-event-card strong{
+  color:#6b1c20;
+  font-size:1.16rem;
+  letter-spacing:.03em;
+}
+
+#upcoming-holy-days .holy-event-card span{
+  margin-top:5px;
+  color:#342522;
+  font-size:1.02rem;
+  font-weight:650;
+}
+
+#upcoming-holy-days .gregorian-date{
+  display:block;
+  margin-top:13px;
+  color:#8a6f60;
+  font-size:.88rem;
+}
+
 @media (max-width:1050px){
   .hero>img{object-position:center 68% !important;}
   .services-section{padding-bottom:80px !important;}
   .services-section .service-card{min-height:190px !important;}
+  #upcoming-holy-days > .holy-event-card{min-height:175px;}
 }
 
 @media (max-width:760px){
   .hero>img{object-position:62% center !important;}
   .services-section{padding-bottom:64px !important;}
   .services-section .service-card{min-height:170px !important;}
+  #holy-days{border-top-width:2px;border-bottom-width:2px;}
+  #upcoming-holy-days > .holy-event-card{min-height:0;padding:22px;}
 }
