@@ -40,12 +40,4 @@
   bindExternal('line-official', 'lineOfficial');
   bindExternal('line-community', 'lineCommunity');
 
-  const toggle = document.querySelector('.menu-toggle');
-  const nav = byId('main-nav');
-  toggle?.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(open));
-  });
-  nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
-  byId('year').textContent = new Date().getFullYear();
 })();

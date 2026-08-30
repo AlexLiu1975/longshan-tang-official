@@ -7,11 +7,13 @@
   <meta name="description" content="聯絡隴善堂｜地址、電話、LINE 信眾交流社群與線上留言。" />
   <title>聯絡我們｜隴善堂</title>
   <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/brand-calligraphy.css?v=20260830-2" />
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="/" aria-label="返回隴善堂首頁"><span class="brand-mark">隴</span><span><strong>隴善堂</strong><small>佛道共融・弘善教化道場</small></span></a>
-    <a class="btn contact-home-btn" href="/">返回首頁</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰</button>
+    <nav id="main-nav" class="main-nav" aria-label="主要導覽"><a href="/">首頁</a><a href="/pages/about.html">認識隴善堂</a><a href="/pages/news.html">最新公告</a><a href="/pages/birthdays.html">神佛聖誕</a><a href="/pages/ai.html">AI 智慧服務</a><a href="/pages/divination.html">線上抽籤</a><a href="/pages/contact.html" aria-current="page">聯絡我們</a></nav>
   </header>
 
   <main class="contact-page">
@@ -55,6 +57,7 @@
   </main>
 
   <footer><strong>隴善堂</strong><p>佛道共融・弘善教化道場</p><p>敬天・禮神・行善・教化・結緣</p><small>© <span id="year"></span> 隴善堂</small></footer>
+  <script src="/navigation.js"></script>
   <script src="/site-config.js"></script>
   <script src="/contact-page.js"></script>
   <script type="module" src="/firebase-contact.js"></script>
