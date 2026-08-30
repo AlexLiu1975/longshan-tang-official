@@ -1,5 +1,5 @@
 /* Homepage layout safety fixes */
-.hero>img{object-position:center 72% !important;}
+.hero>img{object-position:center 46% !important;filter:saturate(.96) contrast(1.03)}
 
 /* 首頁三區塊功能面板 */
 .home-dashboard{
@@ -105,7 +105,7 @@
   text-decoration:none;
   filter:drop-shadow(0 12px 20px rgba(83,24,19,.24));
 }
-.taizi-ai-float img{width:118px;height:118px;display:block;transition:transform .2s ease}
+.taizi-ai-float img{width:118px;height:118px;display:block;object-fit:cover;border-radius:50%;border:3px solid #efc768;box-shadow:0 0 0 5px rgba(255,225,143,.16),0 0 22px rgba(239,199,104,.72);transition:transform .2s ease}
 .taizi-ai-float span{margin-left:-16px;margin-bottom:7px;padding:10px 17px 10px 21px;border:2px solid #dfb458;border-radius:28px;background:linear-gradient(180deg,#7a1919,#571011);color:#ffe7a1;box-shadow:0 0 0 3px rgba(255,225,143,.14),0 8px 20px rgba(75,22,18,.2);white-space:nowrap}
 .taizi-ai-float strong,.taizi-ai-float small{display:block}
 .taizi-ai-float strong{font-size:.98rem}
@@ -113,13 +113,13 @@
 .taizi-ai-float:hover img{transform:translateY(-4px) scale(1.03)}
 
 @media(max-width:1050px){
-  .hero>img{object-position:center 68% !important;}
+  .hero>img{object-position:center 48% !important;}
   .dashboard-grid{grid-template-columns:1fr 1fr}
   .dashboard-services{grid-column:1/-1}
 }
 
 @media(max-width:760px){
-  .hero>img{object-position:62% center !important;}
+  .hero>img{object-position:center 50% !important;}
   .home-dashboard{margin-top:-18px;padding-bottom:44px !important}
   .dashboard-grid{width:min(100% - 24px,680px);grid-template-columns:1fr;gap:14px}
   .dashboard-services{grid-column:auto}
