@@ -8,7 +8,7 @@
   <title>隴善堂｜佛道共融・弘善教化道場</title>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/brand-calligraphy.css?v=20260830-2" />
-  <link rel="stylesheet" href="/home-fixes.css?v=20260829-1" />
+  <link rel="stylesheet" href="/home-fixes.css?v=20260830-1" />
 </head>
 <body>
   <header class="site-header">
@@ -43,16 +43,40 @@
       <div class="couplet couplet-left" aria-label="上聯">隴西文武世代芳</div><div class="couplet couplet-right" aria-label="下聯">善人積德子孫賢</div>
     </section>
 
-    <section id="services" class="section services-section"><div class="section-heading"><span>六大服務</span><h2>信仰、交流與智慧服務，一站抵達</h2></div><div id="service-grid" class="service-grid"></div></section>
+    <section id="services" class="home-dashboard section" aria-label="隴善堂首頁功能區">
+      <div class="dashboard-grid">
+        <section id="news" class="dashboard-panel dashboard-news" aria-labelledby="dashboard-news-title">
+          <div class="dashboard-head"><h2 id="dashboard-news-title">🔔 最新公告</h2><a href="/pages/news.html">更多公告 →</a></div>
+          <article class="notice-card"><time>最新公告</time><h3>公告載入中</h3><p>正在取得隴善堂最新消息。</p></article>
+        </section>
 
-    <section id="news" class="section split-section"><div><div class="section-heading"><span>最新公告</span><h2>隴善堂最新消息</h2></div><article class="notice-card"><time>網站建置中</time><h3>隴善堂官方網站第一版上線準備中</h3><p>後續將陸續加入法會活動、神佛聖誕提醒、信眾交流與線上服務。</p></article><div style="text-align:center; margin-top:24px;"><a href="/pages/news.html" class="btn primary">查看全部公告 →</a></div></div><aside class="quote-card"><p>「以善為念，以德為行；傳承信仰，也傳承做人處世的道理。」</p><small>隴善堂・弘善教化</small></aside></section>
+        <section id="holy-days" class="dashboard-panel dashboard-events" aria-labelledby="dashboard-events-title">
+          <div class="dashboard-head"><h2 id="dashboard-events-title">🗓️ 近期聖誕與法會</h2><a href="/pages/birthdays.html">更多慶典 →</a></div>
+          <div id="upcoming-holy-days" class="dashboard-event-list"><div class="holy-event-card"><strong>近期行事</strong><span>資料載入中</span></div></div>
+        </section>
 
-    <section id="holy-days" class="section soft-section"><div class="section-heading"><span>神佛聖誕</span><h2>年度慶典</h2><p>神佛聖誕・初一十五誦經祈福・年度法會；依今日日期自動顯示接下來最近的行事。</p></div><div id="upcoming-holy-days" class="holy-grid"><div><strong>正月初九</strong><span>玉皇大天尊</span></div><div><strong>二月初二</strong><span>福德正神</span></div><div><strong>二月十五</strong><span>太上道祖</span></div><div><strong>二月十九</strong><span>觀音佛祖・如來佛祖</span></div></div><div style="text-align:center; margin-top:32px;"><a href="./pages/birthdays.html" class="btn primary">查看完整諸神佛聖誕日 →</a></div></section>
+        <section class="dashboard-panel dashboard-services" aria-labelledby="dashboard-services-title">
+          <div class="dashboard-head"><h2 id="dashboard-services-title">✦ 常用服務</h2></div>
+          <div class="quick-service-grid">
+            <a href="/pages/ai.html"><span class="quick-icon">●●●</span><strong>AI 智慧服務</strong><small>神佛問答・網站導覽</small></a>
+            <a href="/pages/birthdays.html"><span class="quick-icon">廟</span><strong>年度慶典</strong><small>神佛聖誕・法會活動</small></a>
+            <a href="/pages/about.html"><span class="quick-icon">冊</span><strong>認識隴善堂</strong><small>宗旨・神祇・歷史</small></a>
+            <a href="/pages/contact.html"><span class="quick-icon">眾</span><strong>聯絡我們</strong><small>留言・交流・社群</small></a>
+          </div>
+          <div id="service-grid" hidden></div>
+        </section>
+      </div>
+    </section>
 
     <section id="about" class="section about-section"><div class="about-copy"><div class="section-heading"><span>認識隴善堂</span><h2>佛道共融・弘善教化</h2></div><p>隴善堂以敬天禮神、勸人行善、弘揚教化與廣結善緣為精神主軸，兼容佛道信仰文化，讓傳統信仰不只被保存，也能在日常生活中持續實踐。</p></div><div class="identity-card"><p class="horizontal">堂佛靈光鼎盛傳</p><div class="identity-couplets"><span>隴西文武世代芳</span><span>善人積德子孫賢</span></div></div></section>
 
     <section class="section connect-section"><div class="section-heading"><span>信眾交流</span><h2>從 LINE 回到隴善堂</h2><p>官方帳號負責通知與服務入口；信眾交流社群則提供互動與交流。</p></div><div class="connect-grid"><a id="line-official" class="connect-card pending" href="#"><strong>LINE 官方帳號</strong><span>加入好友・接收最新訊息</span><em>連結設定中</em></a><a id="line-community" class="connect-card pending" href="#"><strong>隴善堂信眾交流社群</strong><span>信眾交流・公告分享</span><em>連結設定中</em></a></div><div style="text-align:center;margin-top:28px"><a class="btn primary" href="/pages/contact.html">聯絡隴善堂・線上留言 →</a></div></section>
   </main>
+
+  <a class="taizi-ai-float" href="/pages/ai.html" aria-label="開啟隴善堂 AI 智慧服務">
+    <img src="/assets/taizi-ai.svg" alt="太子元帥 AI 服務員" />
+    <span><strong>AI 智慧服務</strong><small>點我詢問</small></span>
+  </a>
 
   <footer>
     <strong>隴善堂</strong>
