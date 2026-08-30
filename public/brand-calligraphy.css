@@ -1,1 +1,6 @@
-PLACEHOLDER
+.site-header{min-height:118px;height:118px}
+.brand{display:block;width:min(430px,42vw);height:96px;flex:0 1 430px;background:url('/assets/longshan-calligraphy.webp') left center/contain no-repeat}
+.brand>span{display:none!important}
+@media (max-width:1050px){.site-header{min-height:104px;height:104px}.brand{width:350px;height:86px;flex-basis:350px}.main-nav{gap:14px}}
+@media (max-width:760px){.site-header{min-height:88px;height:88px;padding:0 14px}.brand{width:250px;height:74px;flex-basis:250px}.main-nav{top:88px}}
+@media (max-width:420px){.brand{width:220px;height:68px;flex-basis:220px}}
