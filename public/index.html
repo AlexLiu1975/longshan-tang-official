@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="/brand-calligraphy.css?v=20260830-2" />
   <link rel="stylesheet" href="/home-fixes.css?v=20260831-2" />
   <style>
-    /* 只顯示最終底圖的上半部神壇主視覺；圖片內建的三個資訊面板裁掉，改由下方真實 HTML 動態區塊呈現 */
+    /* 主圖只保留神壇與標語；原圖下方內建的資訊面板完全裁掉，避免與真實 HTML 功能區重複。 */
     .hero-final{
       width:100% !important;
-      aspect-ratio:2.55 / 1 !important;
+      aspect-ratio:3.85 / 1 !important;
       height:auto !important;
       max-height:none !important;
       overflow:hidden !important;
@@ -27,6 +27,9 @@
       object-fit:initial !important;
       object-position:initial !important;
       margin:0 !important;
+    }
+    @media(max-width:760px){
+      .hero-final{aspect-ratio:3.85 / 1 !important;}
     }
   </style>
 </head>
@@ -50,7 +53,7 @@
 
   <main id="top">
     <section class="hero hero-final" aria-label="隴善堂主神壇首頁主視覺">
-      <img src="/assets/longshantang-hero-v1.png?v=20260901-1" alt="隴善堂李府千歲主神壇主視覺" />
+      <img src="/assets/longshantang-hero-v1.png?v=20260901-2" alt="隴善堂李府千歲主神壇主視覺" />
     </section>
 
     <section id="services" class="home-dashboard section" aria-label="隴善堂首頁功能區">
@@ -71,7 +74,7 @@
             <a href="/pages/ai.html"><span class="quick-icon">●●●</span><strong>AI 智慧服務</strong><small>神佛問答・網站導覽</small></a>
             <a href="/pages/birthdays.html"><span class="quick-icon">廟</span><strong>年度慶典</strong><small>神佛聖誕・法會活動</small></a>
             <a href="/pages/about.html"><span class="quick-icon">冊</span><strong>認識隴善堂</strong><small>宗旨・神祇・歷史</small></a>
-            <a href="/pages/contact.html"><span class="quick-icon">眾</span><strong>聯絡我們</strong><small>留言・交流・社群</small></a>
+            <a href="/pages/contact.html"><span class="quick-icon">眾</span><strong>聯絡我們</strong><small>留言・交流・社群</small></span></a>
           </div>
           <div class="follow-us">
             <div class="follow-title">✦ 追蹤我們</div>
