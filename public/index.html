@@ -10,13 +10,13 @@
   <link rel="stylesheet" href="/brand-calligraphy.css?v=20260830-2" />
   <link rel="stylesheet" href="/home-fixes.css?v=20260831-2" />
   <style>
-    /* 首頁主圖依圖片原始比例自然撐開，避免手機版留下大片空白。 */
+    /* 首頁主圖：不修改原圖，只隱藏圖內最上方假導覽列。 */
     .hero-final{width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;aspect-ratio:auto !important;overflow:hidden !important;background:#2e0909 !important;}
-    .hero-final>img{position:static !important;inset:auto !important;display:block !important;width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;object-fit:contain !important;object-position:center top !important;margin:0 !important;}
-    /* 僅固定太子元帥 AI 圖於首頁右下角；主圖與 HTML 三區塊不變。 */
+    .hero-final>img{position:static !important;inset:auto !important;display:block !important;width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;object-fit:contain !important;object-position:center top !important;margin:-5% 0 0 !important;}
+    /* 僅固定太子元帥 AI 圖於首頁右下角；HTML 三區塊維持不變。 */
     .taizi-ai-float{position:fixed !important;right:18px !important;bottom:max(22px,calc(env(safe-area-inset-bottom) + 14px)) !important;z-index:999 !important;display:block !important;width:auto !important;height:auto !important;padding:0 !important;margin:0 !important;background:transparent !important;border:0 !important;filter:drop-shadow(0 10px 18px rgba(48,10,9,.3)) !important;}
     .taizi-ai-float>img{width:180px !important;height:auto !important;display:block !important;object-fit:contain !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;margin:0 !important;}
-    @media(max-width:760px){.hero-final{height:auto !important;min-height:0 !important;aspect-ratio:auto !important}.hero-final>img{position:static !important;inset:auto !important;width:100% !important;height:auto !important;object-fit:contain !important}.taizi-ai-float{right:12px !important;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px)) !important}.taizi-ai-float>img{width:132px !important}}
+    @media(max-width:760px){.hero-final{height:auto !important;min-height:0 !important;aspect-ratio:auto !important}.hero-final>img{position:static !important;inset:auto !important;width:100% !important;height:auto !important;object-fit:contain !important;margin:-5% 0 0 !important}.taizi-ai-float{right:12px !important;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px)) !important}.taizi-ai-float>img{width:132px !important}}
   </style>
 </head>
 <body>
