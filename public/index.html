@@ -10,12 +10,13 @@
   <link rel="stylesheet" href="/brand-calligraphy.css?v=20260830-2" />
   <link rel="stylesheet" href="/home-fixes.css?v=20260831-2" />
   <style>
-    /* 首頁主圖完整顯示；其餘首頁功能區與版面維持不變。 */
+    /* 首頁主圖依圖片原始比例自然撐開，避免手機版留下大片空白。 */
     .hero-final{
       width:100% !important;
-      aspect-ratio:1024 / 632 !important;
       height:auto !important;
+      min-height:0 !important;
       max-height:none !important;
+      aspect-ratio:auto !important;
       overflow:hidden !important;
       background:#2e0909 !important;
     }
@@ -23,13 +24,23 @@
       display:block !important;
       width:100% !important;
       height:auto !important;
+      min-height:0 !important;
       max-height:none !important;
-      object-fit:initial !important;
-      object-position:initial !important;
+      object-fit:contain !important;
+      object-position:center top !important;
       margin:0 !important;
     }
     @media(max-width:760px){
-      .hero-final{aspect-ratio:1024 / 632 !important;}
+      .hero-final{
+        height:auto !important;
+        min-height:0 !important;
+        aspect-ratio:auto !important;
+      }
+      .hero-final>img{
+        width:100% !important;
+        height:auto !important;
+        object-fit:contain !important;
+      }
     }
   </style>
 </head>
@@ -53,7 +64,7 @@
 
   <main id="top">
     <section class="hero hero-final" aria-label="隴善堂主神壇首頁主視覺">
-      <img src="/assets/longshantang-hero-20260901.avif?v=20260901-2" alt="隴善堂李府千歲主神壇主視覺" />
+      <img src="/assets/longshantang-hero-v1.png?v=20260901-4" alt="隴善堂李府千歲主神壇主視覺" />
     </section>
 
     <section id="services" class="home-dashboard section" aria-label="隴善堂首頁功能區">
