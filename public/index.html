@@ -11,131 +11,33 @@
   <link rel="stylesheet" href="/home-fixes.css?v=20260831-2" />
   <style>
     /* 首頁主圖依圖片原始比例自然撐開，避免手機版留下大片空白。 */
-    .hero-final{
-      width:100% !important;
-      height:auto !important;
-      min-height:0 !important;
-      max-height:none !important;
-      aspect-ratio:auto !important;
-      overflow:hidden !important;
-      background:#2e0909 !important;
-    }
-    .hero-final>img{
-      position:static !important;
-      inset:auto !important;
-      display:block !important;
-      width:100% !important;
-      height:auto !important;
-      min-height:0 !important;
-      max-height:none !important;
-      object-fit:contain !important;
-      object-position:center top !important;
-      margin:0 !important;
-    }
-    /* 僅替換首頁右下角太子元帥 AI 浮動圖，其餘首頁維持不變。 */
-    .taizi-ai-float{
-      right:18px !important;
-      bottom:max(22px,calc(env(safe-area-inset-bottom) + 14px)) !important;
-      display:block !important;
-      filter:drop-shadow(0 10px 18px rgba(48,10,9,.3)) !important;
-    }
-    .taizi-ai-float>img{
-      width:180px !important;
-      height:auto !important;
-      display:block !important;
-      object-fit:contain !important;
-      border:0 !important;
-      border-radius:0 !important;
-      background:transparent !important;
-      box-shadow:none !important;
-      margin:0 !important;
-    }
-    @media(max-width:760px){
-      .hero-final{
-        height:auto !important;
-        min-height:0 !important;
-        aspect-ratio:auto !important;
-      }
-      .hero-final>img{
-        position:static !important;
-        inset:auto !important;
-        width:100% !important;
-        height:auto !important;
-        object-fit:contain !important;
-      }
-      .taizi-ai-float{
-        right:12px !important;
-        bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px)) !important;
-      }
-      .taizi-ai-float>img{width:132px !important;}
-    }
+    .hero-final{width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;aspect-ratio:auto !important;overflow:hidden !important;background:#2e0909 !important;}
+    .hero-final>img{position:static !important;inset:auto !important;display:block !important;width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;object-fit:contain !important;object-position:center top !important;margin:0 !important;}
+    /* 僅固定太子元帥 AI 圖於首頁右下角；主圖與 HTML 三區塊不變。 */
+    .taizi-ai-float{position:fixed !important;right:18px !important;bottom:max(22px,calc(env(safe-area-inset-bottom) + 14px)) !important;z-index:999 !important;display:block !important;width:auto !important;height:auto !important;padding:0 !important;margin:0 !important;background:transparent !important;border:0 !important;filter:drop-shadow(0 10px 18px rgba(48,10,9,.3)) !important;}
+    .taizi-ai-float>img{width:180px !important;height:auto !important;display:block !important;object-fit:contain !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;margin:0 !important;}
+    @media(max-width:760px){.hero-final{height:auto !important;min-height:0 !important;aspect-ratio:auto !important}.hero-final>img{position:static !important;inset:auto !important;width:100% !important;height:auto !important;object-fit:contain !important}.taizi-ai-float{right:12px !important;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px)) !important}.taizi-ai-float>img{width:132px !important}}
   </style>
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="/" aria-label="回到首頁">
-      <span class="brand-mark">隴</span>
-      <span><strong>隴善堂</strong><small>佛道共融・弘善教化道場</small></span>
-    </a>
+    <a class="brand" href="/" aria-label="回到首頁"><span class="brand-mark">隴</span><span><strong>隴善堂</strong><small>佛道共融・弘善教化道場</small></span></a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰</button>
-    <nav id="main-nav" class="main-nav" aria-label="主要導覽">
-      <a href="/" aria-current="page">首頁</a>
-      <a href="/pages/about.html">認識隴善堂</a>
-      <a href="/pages/news.html">最新公告</a>
-      <a href="/pages/birthdays.html">神佛聖誕</a>
-      <a href="/pages/ai.html">AI 智慧服務</a>
-      <a href="/pages/divination.html">線上抽籤</a>
-      <a href="/pages/contact.html">聯絡我們</a>
-    </nav>
+    <nav id="main-nav" class="main-nav" aria-label="主要導覽"><a href="/" aria-current="page">首頁</a><a href="/pages/about.html">認識隴善堂</a><a href="/pages/news.html">最新公告</a><a href="/pages/birthdays.html">神佛聖誕</a><a href="/pages/ai.html">AI 智慧服務</a><a href="/pages/divination.html">線上抽籤</a><a href="/pages/contact.html">聯絡我們</a></nav>
   </header>
-
   <main id="top">
-    <section class="hero hero-final" aria-label="隴善堂主神壇首頁主視覺">
-      <img src="/assets/longshantang-hero-20260901.png?v=20260901-7" alt="隴善堂李府千歲主神壇主視覺" />
-    </section>
-
+    <section class="hero hero-final" aria-label="隴善堂主神壇首頁主視覺"><img src="/assets/longshantang-hero-20260901.png?v=20260901-7" alt="隴善堂李府千歲主神壇主視覺" /></section>
     <section id="services" class="home-dashboard section" aria-label="隴善堂首頁功能區">
       <div class="dashboard-grid">
-        <section id="news" class="dashboard-panel dashboard-news" aria-labelledby="dashboard-news-title">
-          <div class="dashboard-head"><h2 id="dashboard-news-title">🔔 最新公告</h2><a href="/pages/news.html">更多公告 →</a></div>
-          <article class="notice-card"><time>最新公告</time><h3>公告載入中</h3><p>正在取得隴善堂最新消息。</p></article>
-        </section>
-
-        <section id="holy-days" class="dashboard-panel dashboard-events" aria-labelledby="dashboard-events-title">
-          <div class="dashboard-head"><h2 id="dashboard-events-title">🗓️ 近期聖誕與法會</h2><a href="/pages/birthdays.html">更多慶典 →</a></div>
-          <div id="upcoming-holy-days" class="dashboard-event-list"><div class="holy-event-card"><strong>近期行事</strong><span>資料載入中</span></div></div>
-        </section>
-
-        <section class="dashboard-panel dashboard-services" aria-labelledby="dashboard-services-title">
-          <div class="dashboard-head"><h2 id="dashboard-services-title">✦ 常用服務</h2></div>
-          <div class="quick-service-grid">
-            <a href="/pages/ai.html"><span class="quick-icon">●●●</span><strong>AI 智慧服務</strong><small>神佛問答・網站導覽</small></a>
-            <a href="/pages/birthdays.html"><span class="quick-icon">廟</span><strong>年度慶典</strong><small>神佛聖誕・法會活動</small></a>
-            <a href="/pages/about.html"><span class="quick-icon">冊</span><strong>認識隴善堂</strong><small>宗旨・神祇・歷史</small></a>
-            <a href="/pages/contact.html"><span class="quick-icon">眾</span><strong>聯絡我們</strong><small>留言・交流・社群</small></a>
-          </div>
-          <div class="follow-us">
-            <div class="follow-title">✦ 追蹤我們</div>
-            <a id="line-community" class="line-community-link pending" href="#"><span class="line-badge">LINE</span><span><strong>加入 LINE 社群</strong><small>信眾交流・最新訊息</small></span></a>
-          </div>
-          <div id="service-grid" hidden></div>
-        </section>
+        <section id="news" class="dashboard-panel dashboard-news" aria-labelledby="dashboard-news-title"><div class="dashboard-head"><h2 id="dashboard-news-title">🔔 最新公告</h2><a href="/pages/news.html">更多公告 →</a></div><article class="notice-card"><time>最新公告</time><h3>公告載入中</h3><p>正在取得隴善堂最新消息。</p></article></section>
+        <section id="holy-days" class="dashboard-panel dashboard-events" aria-labelledby="dashboard-events-title"><div class="dashboard-head"><h2 id="dashboard-events-title">🗓️ 近期聖誕與法會</h2><a href="/pages/birthdays.html">更多慶典 →</a></div><div id="upcoming-holy-days" class="dashboard-event-list"><div class="holy-event-card"><strong>近期行事</strong><span>資料載入中</span></div></div></section>
+        <section class="dashboard-panel dashboard-services" aria-labelledby="dashboard-services-title"><div class="dashboard-head"><h2 id="dashboard-services-title">✦ 常用服務</h2></div><div class="quick-service-grid"><a href="/pages/ai.html"><span class="quick-icon">●●●</span><strong>AI 智慧服務</strong><small>神佛問答・網站導覽</small></a><a href="/pages/birthdays.html"><span class="quick-icon">廟</span><strong>年度慶典</strong><small>神佛聖誕・法會活動</small></a><a href="/pages/about.html"><span class="quick-icon">冊</span><strong>認識隴善堂</strong><small>宗旨・神祇・歷史</small></a><a href="/pages/contact.html"><span class="quick-icon">眾</span><strong>聯絡我們</strong><small>留言・交流・社群</small></a></div><div class="follow-us"><div class="follow-title">✦ 追蹤我們</div><a id="line-community" class="line-community-link pending" href="#"><span class="line-badge">LINE</span><span><strong>加入 LINE 社群</strong><small>信眾交流・最新訊息</small></span></a></div><div id="service-grid" hidden></div></section>
       </div>
       <div class="home-motto">隴善堂・承神威・濟蒼生・佑平安</div>
     </section>
   </main>
-
-  <a class="taizi-ai-float" href="/pages/ai.html" aria-label="開啟隴善堂 AI 智慧服務">
-    <img src="/assets/taizi-ai-float-20260901.png?v=20260901-1" alt="太子元帥 AI 智慧服務" />
-  </a>
-
-  <footer>
-    <strong>隴善堂</strong>
-    <p>佛道共融・弘善教化道場</p>
-    <p>敬天・禮神・行善・教化・結緣</p>
-    <small>© <span id="year"></span> 隴善堂</small>
-    <div style="margin-top:18px"><a href="/pages/admin.html" style="display:inline-block;padding:7px 14px;border:1px solid rgba(239,205,130,.45);border-radius:999px;color:#efcd82;font-size:.82rem;opacity:.9">🔐 管理員登入</a></div>
-  </footer>
+  <a class="taizi-ai-float" href="/pages/ai.html" aria-label="開啟隴善堂 AI 智慧服務"><img src="/assets/taizi-ai-float-20260901.png?v=20260901-2" alt="太子元帥 AI 智慧服務" /></a>
+  <footer><strong>隴善堂</strong><p>佛道共融・弘善教化道場</p><p>敬天・禮神・行善・教化・結緣</p><small>© <span id="year"></span> 隴善堂</small><div style="margin-top:18px"><a href="/pages/admin.html" style="display:inline-block;padding:7px 14px;border:1px solid rgba(239,205,130,.45);border-radius:999px;color:#efcd82;font-size:.82rem;opacity:.9">🔐 管理員登入</a></div></footer>
   <script src="/navigation.js"></script><script src="/site-config.js"></script><script src="/app.js"></script><script src="./birthdays-widget.js"></script><script type="module" src="/firebase-news.js"></script>
 </body>
 </html>
