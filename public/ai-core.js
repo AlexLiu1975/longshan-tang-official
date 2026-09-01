@@ -11,8 +11,12 @@ export function getAiResponse(question = '') {
   if (/易卦|占卜|起卦|文王|抽籤/.test(q)) {
     return { text: '可進入「周文王先天易卦」服務。請保持一事一問、誠心敬意，卦象作為方向參考。', action: '/pages/divination.html', actionLabel: '前往周文王先天易卦' };
   }
-  if (/地址|在哪|位置|電話|聯絡|社群|line/i.test(q)) {
-    return { text: '隴善堂位於高雄市大寮區中興里捷西路51巷116號。若要查看電話、地圖、LINE 社群或留言，可前往聯絡我們。', action: '/pages/contact.html', actionLabel: '查看聯絡方式' };
+  if (/地址|在哪|位置|電話|聯絡|地圖|導航|google\s*maps?|社群|line/i.test(q)) {
+    return {
+      text: '隴善堂地址：831 高雄市大寮區中興里捷西路51巷116號。\n聯絡電話：07-7813731。\n可點下方「開啟 Google 地圖」直接導航；其他聯絡方式與 LINE 社群可前往「聯絡我們」頁面查看。',
+      action: 'https://www.google.com/maps/search/?api=1&query=22.613886087464497%2C120.39170258910214',
+      actionLabel: '開啟 Google 地圖'
+    };
   }
   if (/隴善堂|介紹|道場|宗旨|精神/.test(q)) {
     return { text: '隴善堂以敬天、禮神、行善、教化、結緣為核心精神，兼容佛道信仰文化。', action: '/pages/about.html', actionLabel: '認識隴善堂' };
