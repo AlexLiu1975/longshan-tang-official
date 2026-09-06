@@ -14,13 +14,18 @@ export function validateDivinationData(data){
   }
   return true;
 }
+export function buildLineShareText(code,hit,pageUrl){
+  return `🧧 隴善堂｜周文王先天易卦\n卦碼：${code}\n卦名：${hit.name}\n\n【卦辭】\n${hit.text}\n\n🔗 查看周文王先天易卦\n${pageUrl}`;
+}
+export function buildLineShareUrl(text){return `https://line.me/R/share?text=${encodeURIComponent(text)}`}
 
 if(typeof document!=="undefined"){
-  const state={hundreds:null,tens:null,ones:null,isDrawing:false,data:null};
+  const state={hundreds:null,tens:null,ones:null,isDrawing:false,data:null,currentCode:null,currentHit:null};
   const places=["hundreds","tens","ones"];
   const labels={hundreds:"第一支",tens:"第二支",ones:"第三支"};
   const buttons=Object.fromEntries(places.map(p=>[p,document.querySelector(`#draw-${p}`)]));
   const reset=document.querySelector("#reset-divination");
+  const shareLine=document.querySelector("#share-line");
   const codeEl=document.querySelector("#hexagram-code");
   const result=document.querySelector("#hexagram-result");
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -72,13 +77,27 @@ if(typeof document!=="undefined"){
     const hit=lookupHexagram(state.data,code);
     result.hidden=false;
     if(hit){
+      state.currentCode=code;
+      state.currentHit=hit;
       result.innerHTML=`<div class="result-slip"><div class="result-seal">隴<br>善<br>堂</div><p class="result-kicker">周文王先天易卦</p><div class="result-code">卦碼 ${code}</div><h2>${hit.name}</h2><div class="result-divider"><span>卦辭</span></div><p class="result-text">${hit.text}</p><p class="result-note">心誠則靈・敬慎參詳</p></div>`;
+      shareLine.hidden=false;
     }else{
+      state.currentCode=null;
+      state.currentHit=null;
+      shareLine.hidden=true;
       result.innerHTML=`<h2>${code}</h2><p>此卦資料尚待校對，請重新占卦或稍後再試。</p>`;
       console.error('Missing divination code:',code);
     }
     reset.hidden=false;
     result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  function shareCurrentResult(){
+    if(!state.currentCode||!state.currentHit)return;
+    const pageUrl=new URL('/pages/divination.html',window.location.origin).href;
+    const text=buildLineShareText(state.currentCode,state.currentHit,pageUrl);
+    const url=buildLineShareUrl(text);
+    window.open(url,'_blank','noopener,noreferrer');
   }
 
   function resetAll(){
@@ -89,10 +108,13 @@ if(typeof document!=="undefined"){
       card.querySelector('.drawn-stick').textContent='';
       card.querySelector('.draw-status').textContent='';
     });
+    state.currentCode=null;
+    state.currentHit=null;
     codeEl.textContent='';
     document.querySelector('.code-card').hidden=true;
     result.hidden=true;
     result.innerHTML='';
+    shareLine.hidden=true;
     reset.hidden=true;
     buttons.hundreds.disabled=!state.data;
     buttons.tens.disabled=true;
@@ -101,6 +123,7 @@ if(typeof document!=="undefined"){
 
   places.forEach(p=>buttons[p]?.addEventListener('click',()=>draw(p)));
   reset?.addEventListener('click',resetAll);
+  shareLine?.addEventListener('click',shareCurrentResult);
   Object.values(buttons).forEach(b=>{if(b)b.disabled=true});
   load();
 }
