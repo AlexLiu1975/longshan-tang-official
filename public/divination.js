@@ -81,6 +81,7 @@ if(typeof document!=="undefined"){
       state.currentHit=hit;
       result.innerHTML=`<div class="result-slip"><div class="result-seal">隴<br>善<br>堂</div><p class="result-kicker">周文王先天易卦</p><div class="result-code">卦碼 ${code}</div><h2>${hit.name}</h2><div class="result-divider"><span>卦辭</span></div><p class="result-text">${hit.text}</p><p class="result-note">心誠則靈・敬慎參詳</p></div>`;
       shareLine.hidden=false;
+      window.LongshanStats?.recordDivinationUse?.();
     }else{
       state.currentCode=null;
       state.currentHit=null;
