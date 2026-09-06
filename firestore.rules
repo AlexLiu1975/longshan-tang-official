@@ -27,5 +27,18 @@ service cloud.firestore {
       allow read: if isAdmin() || resource.data.published == true;
       allow create, update, delete: if isAdmin();
     }
+
+    match /site_stats/{statId} {
+      allow read: if statId in ['homepageVisits', 'divinationUses'];
+      allow create: if statId in ['homepageVisits', 'divinationUses'] &&
+        request.resource.data.keys().hasOnly(['count', 'updatedAt']) &&
+        request.resource.data.count == 1 &&
+        request.resource.data.updatedAt == request.time;
+      allow update: if statId in ['homepageVisits', 'divinationUses'] &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['count', 'updatedAt']) &&
+        request.resource.data.count == resource.data.count + 1 &&
+        request.resource.data.updatedAt == request.time;
+      allow delete: if isAdmin();
+    }
   }
 }
