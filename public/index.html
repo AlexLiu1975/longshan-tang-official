@@ -16,7 +16,8 @@
     /* 僅固定太子元帥 AI 圖於首頁右下角；HTML 三區塊維持不變。 */
     .taizi-ai-float{position:fixed !important;right:18px !important;bottom:max(22px,calc(env(safe-area-inset-bottom) + 14px)) !important;z-index:999 !important;display:block !important;width:auto !important;height:auto !important;padding:0 !important;margin:0 !important;background:transparent !important;border:0 !important;filter:drop-shadow(0 10px 18px rgba(48,10,9,.3)) !important;}
     .taizi-ai-float>img{width:180px !important;height:auto !important;display:block !important;object-fit:contain !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;margin:0 !important;}
-    @media(max-width:760px){.hero-final{height:auto !important;min-height:0 !important;aspect-ratio:auto !important}.hero-final>img{position:static !important;inset:auto !important;width:100% !important;height:auto !important;object-fit:contain !important;margin:-5% 0 0 !important}.taizi-ai-float{right:12px !important;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px)) !important}.taizi-ai-float>img{width:132px !important}}
+    .site-counter{margin-top:14px;color:#efcd82;font-size:.9rem;letter-spacing:.04em}.site-counter strong{font-size:1.05rem}
+    @media(max-width:760px){.hero-final{height:auto !important;min-height:0 !important;aspect-ratio:auto !important}.hero-final>img{position:static !important;inset:auto !important;width:100% !important;height:auto !important;object-fit:contain !important;margin:-5% 0 0 !important}.taizi-ai-float{right:12px !important;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px)) !important}.taizi-ai-float>img{width:132px !important}.site-counter{font-size:.86rem}}
   </style>
 </head>
 <body>
@@ -37,7 +38,7 @@
     </section>
   </main>
   <a class="taizi-ai-float" href="/pages/ai.html" aria-label="開啟隴善堂 AI 智慧服務"><img src="/assets/taizi-ai-float-20260901.png?v=20260901-2" alt="太子元帥 AI 智慧服務" /></a>
-  <footer><strong>隴善堂</strong><p>佛道共融・弘善教化道場</p><p>敬天・禮神・行善・教化・結緣</p><small>© <span id="year"></span> 隴善堂</small><div style="margin-top:18px"><a href="/pages/admin.html" style="display:inline-block;padding:7px 14px;border:1px solid rgba(239,205,130,.45);border-radius:999px;color:#efcd82;font-size:.82rem;opacity:.9">🔐 管理員登入</a></div></footer>
-  <script src="/navigation.js"></script><script src="/site-config.js"></script><script src="/app.js"></script><script src="./birthdays-widget.js"></script><script type="module" src="/firebase-news.js"></script>
+  <footer><strong>隴善堂</strong><p>佛道共融・弘善教化道場</p><p>敬天・禮神・行善・教化・結緣</p><div class="site-counter">網站累計參觀 <strong id="homepage-visit-count">—</strong> 人次</div><small>© <span id="year"></span> 隴善堂</small><div style="margin-top:18px"><a href="/pages/admin.html" style="display:inline-block;padding:7px 14px;border:1px solid rgba(239,205,130,.45);border-radius:999px;color:#efcd82;font-size:.82rem;opacity:.9">🔐 管理員登入</a></div></footer>
+  <script src="/navigation.js"></script><script src="/site-config.js"></script><script src="/app.js"></script><script src="./birthdays-widget.js"></script><script type="module" src="/firebase-news.js"></script><script type="module" src="/site-stats.js"></script>
 </body>
 </html>
