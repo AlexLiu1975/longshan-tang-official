@@ -17,3 +17,9 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LONGSHAN_TANG_OFFICIAL }}
           channelId: live
           projectId: longshan-tang-official
+      - name: Authenticate Firebase service account
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LONGSHAN_TANG_OFFICIAL }}
+      - name: Deploy Firestore rules
+        run: npx --yes firebase-tools@latest deploy --only firestore:rules --project longshan-tang-official --non-interactive
