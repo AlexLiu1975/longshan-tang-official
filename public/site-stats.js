@@ -52,7 +52,7 @@ async function refreshCounter(type) {
     element.textContent = formatCount(count);
   } catch (error) {
     console.error(`讀取 ${type} 統計失敗：`, error);
-    element.textContent = "—";
+    element.textContent = "0";
   }
 }
 
