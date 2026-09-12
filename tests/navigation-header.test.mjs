@@ -9,6 +9,8 @@ const pages = [
   'public/pages/birthdays.html',
   'public/pages/ai.html',
   'public/pages/divination.html',
+  'public/pages/twenty-eight-mansions.html',
+  'public/pages/yanqin-chart.html',
   'public/pages/contact.html'
 ];
 
@@ -16,9 +18,7 @@ const navigationLinks = [
   ['首頁', '/'],
   ['認識隴善堂', '/pages/about.html'],
   ['最新公告', '/pages/news.html'],
-  ['神佛聖誕', '/pages/birthdays.html'],
   ['AI 智慧服務', '/pages/ai.html'],
-  ['線上抽籤', '/pages/divination.html'],
   ['聯絡我們', '/pages/contact.html']
 ];
 
@@ -30,7 +30,8 @@ test('every public page exposes the complete linked site navigation', () => {
     for (const [label, href] of navigationLinks) {
       assert.match(html, new RegExp(`<a[^>]+href="${href.replaceAll('.', '\\.') }"[^>]*>${label}<\\/a>`), `${page} needs a working ${label} link`);
     }
-    assert.match(html, /<script src="\/navigation\.js"><\/script>/, `${page} needs the shared navigation behavior`);
+    assert.match(html, /<a[^>]+href="\/pages\/birthdays\.html"[^>]*>(?:神佛聖誕|年度慶典)<\/a>/, `${page} needs a working celebrations link`);
+    assert.match(html, /<script src="\/navigation\.js(?:\?v=\d{8}-\d+)?"><\/script>/, `${page} needs the shared navigation behavior`);
   }
 });
 
