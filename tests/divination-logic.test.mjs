@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { randomDigit, buildCode, lookupHexagram, validateDivinationData } from '../public/divination.js';
+import { randomDigit, buildCode, lookupHexagram, validateDivinationData, formatVerse } from '../public/divination.js';
 
 const data = JSON.parse(fs.readFileSync('public/data/divination.json', 'utf8'));
 
@@ -17,6 +17,11 @@ assert.equal(lookupHexagram(data, '111').name, '乾');
 assert.equal(lookupHexagram(data, '888').name, '坤');
 assert.equal(validateDivinationData(data), true);
 assert.equal(validateDivinationData({ '111': data['111'] }), false);
+assert.equal(
+  formatVerse(data['343'].text),
+  '坎卦之中可圓融　君問和事可能通\n折獄片言利九月　執中公道兩無容'
+);
+assert.equal(formatVerse('尚未校對的內容'), '尚未校對的內容');
 
 for (let a = 1; a <= 8; a += 1) {
   for (let b = 1; b <= 8; b += 1) {

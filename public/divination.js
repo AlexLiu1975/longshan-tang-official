@@ -1,6 +1,12 @@
 export function randomDigit(){return Math.floor(Math.random()*8)+1}
 export function buildCode(h,t,o){return `${h}${t}${o}`}
 export function lookupHexagram(data,code){return data?.[code]??null}
+export function formatVerse(text){
+  const original=String(text??'').trim();
+  const clauses=original.split(/\s+/);
+  if(clauses.length!==4)return original;
+  return `${clauses[0]}　${clauses[1]}\n${clauses[2]}　${clauses[3]}`;
+}
 export function validateDivinationData(data){
   if(!data||typeof data!=="object"||Object.keys(data).length!==512)return false;
   for(let a=1;a<=8;a+=1){
@@ -79,7 +85,7 @@ if(typeof document!=="undefined"){
     if(hit){
       state.currentCode=code;
       state.currentHit=hit;
-      result.innerHTML=`<div class="result-slip"><div class="result-seal">隴<br>善<br>堂</div><p class="result-kicker">周文王先天易卦</p><div class="result-code">卦碼 ${code}</div><h2>${hit.name}</h2><div class="result-divider"><span>卦辭</span></div><p class="result-text">${hit.text}</p><p class="result-note">心誠則靈・敬慎參詳</p></div>`;
+      result.innerHTML=`<div class="result-slip"><div class="result-seal">隴<br>善<br>堂</div><p class="result-kicker">周文王先天易卦</p><div class="result-code">卦碼 ${code}</div><h2>${hit.name}</h2><div class="result-divider"><span>卦辭</span></div><p class="result-text">${formatVerse(hit.text)}</p><p class="result-note">心誠則靈・敬慎參詳</p></div>`;
       shareLine.hidden=false;
       window.LongshanStats?.recordDivinationUse?.();
     }else{
