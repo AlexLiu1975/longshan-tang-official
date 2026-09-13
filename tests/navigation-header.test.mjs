@@ -10,7 +10,6 @@ const pages = [
   'public/pages/ai.html',
   'public/pages/divination.html',
   'public/pages/twenty-eight-mansions.html',
-  'public/pages/yanqin-chart.html',
   'public/pages/contact.html'
 ];
 

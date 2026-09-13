@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 
 const publicPages = [
@@ -10,14 +10,13 @@ const publicPages = [
   'public/pages/ai.html',
   'public/pages/divination.html',
   'public/pages/twenty-eight-mansions.html',
-  'public/pages/yanqin-chart.html',
   'public/pages/contact.html'
 ];
 
 const serviceLinks = [
   ['線上占卦', '/pages/divination.html'],
   ['二十八宿介紹', '/pages/twenty-eight-mansions.html'],
-  ['二十八宿自動排盤', '/pages/yanqin-chart.html']
+  ['二十八宿自動排盤', '/pages/twenty-eight-mansions.html#yanqin-chart']
 ];
 
 test('every public page exposes the three AI service links in an accessible submenu', () => {
@@ -71,12 +70,18 @@ test('the mansions page contains the complete ordered mansion, animal, and gener
   assert.match(html, /星期/);
 });
 
-test('the Yanqin page explains the requested cycle and chart concepts without claiming an unfinished calculator', () => {
-  const html = readFileSync('public/pages/yanqin-chart.html', 'utf8');
+test('the mansions page includes the Yanqin principles and replaces the standalone chart page', () => {
+  const html = readFileSync('public/pages/twenty-eight-mansions.html', 'utf8');
   for (const concept of ['七元起宿法', '60甲子', '420日', '四將', '值日星宿', '時禽']) {
     assert.match(html, new RegExp(concept), `missing ${concept}`);
   }
+  assert.match(html, /id="yanqin-chart"/);
   assert.match(html, /原理說明/);
   assert.doesNotMatch(html, /id="calculate-chart"/);
+  assert.equal(existsSync('public/pages/yanqin-chart.html'), false, 'standalone chart page should be removed');
 });
 
+test('the merged Yanqin anchor clears the sticky header', () => {
+  const css = readFileSync('public/culture-pages.css', 'utf8');
+  assert.match(css, /#yanqin-chart\{scroll-margin-top:\s*\d+px\}/);
+});
