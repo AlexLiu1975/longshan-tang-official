@@ -5,6 +5,7 @@ import test from 'node:test';
 const publicPages = [
   'public/index.html',
   'public/pages/about.html',
+  'public/pages/deity-visits.html',
   'public/pages/news.html',
   'public/pages/birthdays.html',
   'public/pages/ai.html',
