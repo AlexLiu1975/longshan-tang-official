@@ -35,13 +35,35 @@ test('calculator page loads the shared site chrome, palm asset, styles, vendor a
   assert.equal(existsSync('public/pages/xiao-liu-ren.html'), true);
   const html = readFileSync('public/pages/xiao-liu-ren.html', 'utf8');
   for (const required of [
-    '小六壬起卦', '農曆手動輸入', '國曆自動轉換', '入門教學',
+    '小六壬起卦', '農曆手動輸入', '國曆自動轉換', '即時起卦', '入門教學',
     '/assets/left-palm.png', '/xiao-liu-ren.css', '/vendor/lunar.js', '/xiao-liu-ren.js',
   ]) assert.match(html, new RegExp(required.replaceAll('.', '\\.')));
   for (const palace of ['大安', '留連', '速喜', '赤口', '小吉', '空亡']) {
     assert.match(html, new RegExp(`data-palace="${palace}"`));
   }
   assert.doesNotMatch(html, />\s*(食指|中指|無名指)(根部|指甲)\s*</);
+});
+
+test('instant divination formats the device local date and time for conversion', async () => {
+  const { currentSolarInput } = await import('../public/xiao-liu-ren.js');
+  assert.deepEqual(currentSolarInput(new Date(2026, 9, 1, 23, 5)), {
+    date: '2026-10-01',
+    time: '23:05',
+  });
+  assert.throws(() => currentSolarInput(new Date('invalid')), RangeError);
+});
+
+test('instant divination ships with a fresh module cache key', () => {
+  const html = readFileSync('public/pages/xiao-liu-ren.html', 'utf8');
+  assert.match(html, /\/xiao-liu-ren\.js\?v=20261001-2/);
+});
+
+test('new or rejected readings cancel stale palm animations', () => {
+  const source = readFileSync('public/xiao-liu-ren.js', 'utf8');
+  assert.match(source, /function cancelAnimation\(\)/);
+  assert.match(source, /if \(id !== animationId\) return;/);
+  assert.match(source, /catch \(error\) \{ cancelAnimation\(\);/);
+  assert.match(source, /if \(isLeapMonth\) \{\s*cancelAnimation\(\);/);
 });
 
 test('calculator core follows the fixed palace sequence and examples', async () => {

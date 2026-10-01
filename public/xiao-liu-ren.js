@@ -30,6 +30,15 @@ export function branchFromTime(hour) {
   return hour === 23 || hour === 0 ? '子' : BRANCHES[Math.floor((hour + 1) / 2)];
 }
 
+export function currentSolarInput(now = new Date()) {
+  if (!(now instanceof Date) || Number.isNaN(now.getTime())) throw new RangeError('目前時間無法讀取');
+  const pad = (value) => String(value).padStart(2, '0');
+  return {
+    date: `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`,
+    time: `${pad(now.getHours())}:${pad(now.getMinutes())}`,
+  };
+}
+
 export function convertSolarInput({ date, time }, SolarClass = globalThis.Solar) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date ?? '') || date < '1901-01-01' || date > '2100-12-31') throw new RangeError('國曆日期超出支援範圍');
   if (!/^\d{2}:\d{2}$/.test(time ?? '')) throw new RangeError('時間格式不正確');
@@ -73,6 +82,16 @@ function init() {
     root.querySelectorAll('[data-palace]').forEach((node) => { node.dataset.state = 'idle'; });
   }
 
+  function cancelAnimation() {
+    animationId += 1;
+    paused = false;
+    skipped = false;
+    pauseButton.textContent = '暫停動畫';
+    pauseButton.hidden = true;
+    skipButton.hidden = true;
+    resetPalm();
+  }
+
   const wait = (milliseconds, id) => new Promise((resolve) => {
     const tick = () => {
       if (id !== animationId || skipped) return resolve();
@@ -84,7 +103,9 @@ function init() {
 
   async function animate(reading) {
     const id = ++animationId;
+    paused = false;
     skipped = false;
+    pauseButton.textContent = '暫停動畫';
     pauseButton.hidden = false;
     skipButton.hidden = false;
     resetPalm();
@@ -100,6 +121,7 @@ function init() {
       if (id !== animationId || skipped) break;
       root.querySelector(`[data-palace="${step.result}"]`).dataset.state = 'result';
     }
+    if (id !== animationId) return;
     resetPalm();
     root.querySelector(`[data-palace="${reading.final}"]`).dataset.state = 'result';
     status.textContent = `完成：最終落宮為${reading.final}`;
@@ -117,6 +139,22 @@ function init() {
     animate(reading);
   }
 
+  function runSolar({ date, time }, prefix = '國曆') {
+    let converted;
+    try { converted = convertSolarInput({ date, time }); }
+    catch (error) { cancelAnimation(); status.textContent = error.message; return; }
+    const { lunarMonth, lunarDay, isLeapMonth, branch } = converted;
+    const convertedText = `${prefix} ${date} ${time} → 農曆${isLeapMonth ? '閏' : ''}${lunarMonth}月${lunarDay}日・${branch}時`;
+    if (isLeapMonth) {
+      cancelAnimation();
+      result.hidden = true;
+      resetPalm();
+      status.textContent = `${convertedText}。目前版本不處理閏月推算。`;
+      return;
+    }
+    render(calculateReading({ lunarMonth, lunarDay, branch }), convertedText);
+  }
+
   root.querySelector('#lunar-form').addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -128,18 +166,11 @@ function init() {
     const data = new FormData(event.currentTarget);
     const date = String(data.get('solar-date'));
     const time = String(data.get('solar-time'));
-    let converted;
-    try { converted = convertSolarInput({ date, time }); }
-    catch (error) { status.textContent = error.message; return; }
-    const { lunarMonth, lunarDay, isLeapMonth, branch } = converted;
-    const convertedText = `國曆 ${date} ${time} → 農曆${isLeapMonth ? '閏' : ''}${lunarMonth}月${lunarDay}日・${branch}時`;
-    if (isLeapMonth) {
-      result.hidden = true;
-      resetPalm();
-      status.textContent = `${convertedText}。目前版本不處理閏月推算。`;
-      return;
-    }
-    render(calculateReading({ lunarMonth, lunarDay, branch }), convertedText);
+    runSolar({ date, time });
+  });
+
+  root.querySelector('#xlr-now').addEventListener('click', () => {
+    runSolar(currentSolarInput(), '即時起卦：國曆');
   });
 
   modes.forEach((button) => button.addEventListener('click', () => selectMode(button.dataset.mode)));
