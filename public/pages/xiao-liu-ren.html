@@ -8,7 +8,7 @@
   <title>小六壬起卦｜隴善堂</title>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/brand-calligraphy.css?v=20260913-1" />
-  <link rel="stylesheet" href="/xiao-liu-ren.css?v=20261001-1" />
+  <link rel="stylesheet" href="/xiao-liu-ren.css?v=20261002-2" />
 </head>
 <body class="xlr-page">
   <header class="site-header">
@@ -25,13 +25,13 @@
         <div class="xlr-card">
           <form id="lunar-form" class="xlr-form" data-mode-panel="lunar">
             <h2>選擇農曆日期與時辰</h2>
-            <div class="xlr-form-grid"><label>農曆月<select name="lunar-month" required><option value="1">正月</option><option value="2">二月</option><option value="3">三月</option><option value="4">四月</option><option value="5">五月</option><option value="6">六月</option><option value="7">七月</option><option value="8">八月</option><option value="9">九月</option><option value="10">十月</option><option value="11">十一月</option><option value="12">十二月</option></select></label><label>農曆日<select name="lunar-day" required></select></label><label>時辰<select name="branch" required></select></label></div>
+            <div class="xlr-form-grid"><label>農曆月<select name="lunar-month" required><option value="1">正月</option><option value="2">二月</option><option value="3">三月</option><option value="4">四月</option><option value="5">五月</option><option value="6">六月</option><option value="7">七月</option><option value="8">八月</option><option value="9">九月</option><option value="10">十月</option><option value="11">十一月</option><option value="12">十二月</option></select></label><label>農曆日<select name="lunar-day" required></select></label><label>時辰（序號為推算步數）<select name="branch" required></select></label></div>
             <p class="limit-note">簡單模式不處理閏月，也不依特定年份檢查該月有二十九或三十日。</p>
             <button type="submit">開始推算</button>
           </form>
           <form id="solar-form" class="xlr-form" data-mode-panel="solar" hidden>
             <h2>輸入國曆日期與時間</h2>
-            <div class="xlr-form-grid"><label>國曆日期<input type="date" name="solar-date" min="1901-01-01" max="2100-12-31" required /></label><label>時間<input type="time" name="solar-time" value="12:00" required /></label></div>
+            <div class="xlr-form-grid"><label>國曆日期<input type="date" name="solar-date" min="1901-01-01" max="2100-12-31" required /></label><label>台灣時間<input type="time" name="solar-time" value="12:00" required /></label></div>
             <p class="limit-note">先轉為農曆再推算；若遇閏月，系統會顯示日期並停止推算。</p>
             <button type="submit">轉換並推算</button>
           </form>
@@ -42,6 +42,19 @@
           <div class="palm"><img src="/assets/left-palm.png" alt="左手掌底圖" /><span class="palace-node index-base" data-palace="大安" data-state="idle">大安</span><span class="palace-node index-tip" data-palace="留連" data-state="idle">留連</span><span class="palace-node middle-tip" data-palace="速喜" data-state="idle">速喜</span><span class="palace-node ring-tip" data-palace="赤口" data-state="idle">赤口</span><span class="palace-node ring-base" data-palace="小吉" data-state="idle">小吉</span><span class="palace-node middle-base" data-palace="空亡" data-state="idle">空亡</span></div>
           <div class="animation-controls"><button id="xlr-pause" type="button" hidden>暫停動畫</button><button id="xlr-skip" type="button" hidden>跳過動畫</button></div>
         </div>
+      </section>
+      <section id="xlr-calendar" class="xlr-card calendar-card" aria-live="polite" hidden>
+        <h2>起卦時間與干支四柱</h2>
+        <p data-calendar-time></p>
+        <dl class="pillar-grid">
+          <div><dt>年柱</dt><dd data-pillar="year"></dd></div>
+          <div><dt>月柱</dt><dd data-pillar="month"></dd></div>
+          <div><dt>日柱</dt><dd data-pillar="day"></dd></div>
+          <div><dt>時柱</dt><dd data-pillar="hour"></dd></div>
+        </dl>
+        <p class="limit-note">四柱採子初換日派（流派一）：以台灣標準時間（Asia/Taipei），立春交節時刻換年、十二「節」交節時刻換月（不以農曆初一或中氣換月）、23:00 子時開始換日，時干隨新日干推算；不校正真太陽時。即時起卦顯示點擊當刻；國曆轉換顯示輸入時間，均不持續更新。</p>
+        <p class="limit-note">小六壬沿用原有規則：以當天民用農曆月、日及時辰順數，農曆日期於 00:00 換日。因此 23:00–23:59 的四柱日柱已屬次日，小六壬仍採當天農曆日；閏月顯示曆法資訊並停止推算。</p>
+        <p>曆法主要核對來源：<a href="https://ecal.click108.com.tw/index.php" target="_blank" rel="noopener noreferrer">科技紫微網農民曆</a>。四柱依上述流派規則計算；農民曆的農曆年、月標示與四柱年、月可能不同。</p>
       </section>
       <section id="xlr-result" class="xlr-card result-card" aria-live="polite" hidden></section>
 
@@ -57,6 +70,6 @@
     </div>
   </main>
   <footer><strong>隴善堂</strong><p>佛道共融・弘善教化道場</p><p>敬天・禮神・行善・教化・結緣</p><small>© <span id="year"></span> 隴善堂</small></footer>
-  <script src="/navigation.js?v=20260913-1"></script><script type="module" src="/site-stats.js"></script><script src="/vendor/lunar.js"></script><script type="module" src="/xiao-liu-ren.js?v=20261002-1"></script>
+  <script src="/navigation.js?v=20260913-1"></script><script type="module" src="/site-stats.js"></script><script src="/vendor/lunar.js"></script><script type="module" src="/xiao-liu-ren.js?v=20261002-2"></script>
 </body>
 </html>

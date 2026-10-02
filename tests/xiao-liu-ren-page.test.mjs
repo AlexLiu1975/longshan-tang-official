@@ -44,18 +44,19 @@ test('calculator page loads the shared site chrome, palm asset, styles, vendor a
   assert.doesNotMatch(html, />\s*(食指|中指|無名指)(根部|指甲)\s*</);
 });
 
-test('instant divination formats the device local date and time for conversion', async () => {
+test('instant divination formats Taipei date and time for conversion', async () => {
   const { currentSolarInput } = await import('../public/xiao-liu-ren.js');
-  assert.deepEqual(currentSolarInput(new Date(2026, 9, 1, 23, 5)), {
+  assert.deepEqual(currentSolarInput(new Date('2026-10-01T15:05:00Z')), {
     date: '2026-10-01',
     time: '23:05',
+    second: 0,
   });
   assert.throws(() => currentSolarInput(new Date('invalid')), RangeError);
 });
 
 test('instant divination ships with a fresh module cache key', () => {
   const html = readFileSync('public/pages/xiao-liu-ren.html', 'utf8');
-  assert.match(html, /\/xiao-liu-ren\.js\?v=20261001-2/);
+  assert.match(html, /\/xiao-liu-ren\.js\?v=20261002-2/);
 });
 
 test('new or rejected readings cancel stale palm animations', () => {
