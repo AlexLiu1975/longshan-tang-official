@@ -29,6 +29,14 @@ const counters = {
   divination: {
     documentId: "divinationUses",
     elementId: "divination-use-count"
+  },
+  annualFortune: {
+    documentId: "annualFortuneUses",
+    elementId: "annual-fortune-use-count"
+  },
+  smallLiuren: {
+    documentId: "smallLiurenUses",
+    elementId: "small-liuren-use-count"
   }
 };
 
@@ -95,7 +103,9 @@ async function recordDivinationUse() {
 
 window.LongshanStats = {
   recordDivinationUse,
-  refreshDivinationCount: () => refreshCounter("divination")
+  refreshDivinationCount: () => refreshCounter("divination"),
+  recordAnnualFortuneUse: () => incrementCounter("annualFortune").catch(error => console.error("流年排盤統計失敗：", error)),
+  recordSmallLiurenUse: () => incrementCounter("smallLiuren").catch(error => console.error("小六壬推算統計失敗：", error))
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -104,5 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (document.getElementById(counters.divination.elementId)) {
     refreshCounter("divination");
+  }
+  for (const type of ["annualFortune", "smallLiuren"]) {
+    if (document.getElementById(counters[type].elementId)) refreshCounter(type);
   }
 });
