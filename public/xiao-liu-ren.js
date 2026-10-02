@@ -137,6 +137,7 @@ function init() {
       <article><span>時宮・最終結果</span><strong>${reading.hour.result}</strong><p>${formatPath(reading.hour)}</p></article></div>
       <div class="final-meaning"><h3>${reading.final}</h3><p>${MEANINGS[reading.final]}</p></div>`;
     animate(reading);
+    window.LongshanStats?.recordSmallLiurenUse?.();
   }
 
   function runSolar({ date, time }, prefix = '國曆') {
