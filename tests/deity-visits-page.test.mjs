@@ -25,20 +25,21 @@ test('the deity visits history page exists and is linked beneath About on every 
   }
 });
 
-test('the history page preserves all five records in year and lunar-date order', () => {
+test('the history page preserves all six records in reverse chronological order', () => {
   const html = readFileSync('public/pages/deity-visits.html', 'utf8');
   const records = [
-    ['乙巳年', '農曆二月十五日', '道祖聖誕'],
-    ['丙午年', '農曆正月初一', '新春團拜'],
-    ['丙午年', '農曆四月二十六日', '李府千歲聖誕'],
+    ['丙午年', '農曆八月十五日', '神尊蒞臨'],
     ['丙午年', '農曆七月二十九日', '地藏王菩薩聖誕'],
-    ['丙午年', '農曆八月十五日', '神尊蒞臨']
+    ['丙午年', '農曆七月十二日', '中元普渡蒞臨神尊'],
+    ['丙午年', '農曆四月二十六日', '李府千歲聖誕'],
+    ['丙午年', '農曆正月初一', '新春團拜'],
+    ['乙巳年', '農曆二月十五日', '道祖聖誕']
   ];
 
   let previousPosition = -1;
   for (const [year, date, event] of records) {
     const position = html.indexOf(`data-record="${year}-${date}"`);
-    assert.ok(position > previousPosition, `${year}${date} must appear in chronological order`);
+    assert.ok(position > previousPosition, `${year}${date} must appear in reverse chronological order`);
     const record = html.slice(position, html.indexOf('</article>', position));
     assert.ok(record.includes(event), `${year}${date} needs ${event}`);
     previousPosition = position;
@@ -50,7 +51,13 @@ test('the history page preserves all five records in year and lunar-date order',
     '張府天師（祖天師 張道陵）',
     '來帶走56條靈',
     '太始無上混一大道君太聖祖',
-    '來源地未註明'
+    '來源地未註明',
+    '宜蘭道教總廟',
+    '第一代天師',
+    '發旨',
+    '賜旨　隴善堂 李府千歲',
+    '高雄三鳳宮',
+    '哪吒三太子'
   ]) {
     assert.ok(html.includes(detail), `missing preserved historical detail: ${detail}`);
   }
