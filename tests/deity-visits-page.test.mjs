@@ -32,7 +32,7 @@ test('the history page preserves all six records in reverse chronological order'
     ['丙午年', '農曆七月二十九日', '地藏王菩薩聖誕'],
     ['丙午年', '農曆七月十二日', '中元普渡蒞臨神尊'],
     ['丙午年', '農曆四月二十六日', '李府千歲聖誕'],
-    ['丙午年', '農曆正月初一', '新春團拜'],
+    ['丙午年', '農曆正月初一日', '新春團拜'],
     ['乙巳年', '農曆二月十五日', '道祖聖誕']
   ];
 
@@ -61,6 +61,41 @@ test('the history page preserves all six records in reverse chronological order'
   ]) {
     assert.ok(html.includes(detail), `missing preserved historical detail: ${detail}`);
   }
+});
+
+test('every record uses the full cyclical-year lunar date and the standard table columns', () => {
+  const html = readFileSync('public/pages/deity-visits.html', 'utf8');
+  const articles = [...html.matchAll(/<article class="history-record"[\s\S]*?<\/article>/g)].map((match) => match[0]);
+
+  assert.equal(articles.length, 6, 'all six historical records must remain present');
+
+  for (const article of articles) {
+    assert.match(
+      article,
+      /<h3 class="record-date">[甲乙丙丁戊己庚辛壬癸][子丑寅卯辰巳午未申酉戌亥]年農曆.+日<\/h3>/,
+      'each displayed date must include the cyclical year, 農曆, month, and 日'
+    );
+    assert.match(
+      article,
+      /<thead><tr><th scope="col">№<\/th><th scope="col">宮廟／聖地<\/th><th scope="col">蒞臨神尊<\/th>/,
+      'each table must start with the standard three columns'
+    );
+  }
+
+  const augustRecord = articles.find((article) => article.includes('丙午年農曆八月十五日'));
+  assert.ok(augustRecord, 'missing 丙午年農曆八月十五日 record');
+  assert.equal(
+    [...augustRecord.matchAll(/來源地未註明/g)].length,
+    3,
+    'all three unrecorded sources on 丙午年農曆八月十五日 must be labeled'
+  );
+
+  const importantRecord = articles.find((article) => article.includes('來帶走56條靈'));
+  assert.match(
+    importantRecord,
+    /<th scope="col">重要事蹟／紀錄<\/th>/,
+    'records with important details must use the standard detail column'
+  );
 });
 
 test('the history page exposes responsive timeline and mobile table safeguards', () => {
