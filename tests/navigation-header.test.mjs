@@ -17,7 +17,7 @@ const pages = [
 const navigationLinks = [
   ['首頁', '/'],
   ['認識隴善堂', '/pages/about.html'],
-  ['最新公告', '/pages/news.html'],
+  ['(?:最新公告|隴善堂官網（最新公告）)', '/pages/news.html'],
   ['AI 智慧服務', '/pages/ai.html'],
   ['聯絡我們', '/pages/contact.html']
 ];

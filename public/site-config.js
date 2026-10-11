@@ -9,7 +9,7 @@ const SITE_CONFIG = {
     phone: '07-7813731'
   },
   services: [
-    { title: '最新公告', subtitle: '掌握最新消息', icon: '📣', href: '#news' },
+    { title: '隴善堂官網（最新公告）', subtitle: '掌握官網公告', icon: '📣', href: '#news' },
     { title: '神佛聖誕', subtitle: '聖誕日期查詢', icon: '🗓️', href: '#holy-days' },
     { title: '隴善堂介紹', subtitle: '認識隴善堂', icon: '🏛️', href: '#about' },
     { title: '信眾交流社群', subtitle: '加入 LINE 社群', icon: '👥', href: 'external:lineCommunity' },

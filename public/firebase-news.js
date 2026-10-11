@@ -83,7 +83,7 @@ async function loadNews() {
       oldNotice.innerHTML = `
         <time>最新公告</time>
         <h3>目前尚無公告</h3>
-        <p>隴善堂最新消息將於此處公布。</p>
+        <p>隴善堂官網公告將於此處公布。</p>
       `;
       return;
     }

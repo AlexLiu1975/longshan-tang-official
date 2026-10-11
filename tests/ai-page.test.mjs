@@ -7,7 +7,7 @@ for (const id of ['ai-culture', 'ai-birthdays', 'ai-news', 'ai-guide', 'ai-divin
   assert.ok(html.includes(`id="${id}"`), `missing ${id}`);
 }
 
-for (const text of ['AI 信仰文化問答', '神佛聖誕查詢', '最新公告與活動', '隴善堂網站導覽', '周文王先天易卦']) {
+for (const text of ['AI 信仰文化問答', '神佛聖誕查詢', '隴善堂官網（最新公告）', '隴善堂網站導覽', '周文王先天易卦']) {
   assert.ok(html.includes(text), `missing ${text}`);
 }
 

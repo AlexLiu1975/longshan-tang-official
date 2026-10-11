@@ -110,3 +110,18 @@ test('the history page exposes responsive timeline and mobile table safeguards',
   assert.match(css, /min-width:\s*620px/);
 }
 );
+
+test('public pages use one unified official news label and remove the old latest-news wording', () => {
+  for (const page of publicPages) {
+    const html = readFileSync(page, 'utf8');
+    assert.doesNotMatch(html, /最新消息/, `${page} must not retain the old latest-news wording`);
+  }
+
+  const home = readFileSync('public/index.html', 'utf8');
+  const news = readFileSync('public/pages/news.html', 'utf8');
+  const navigation = readFileSync('public/navigation.js', 'utf8');
+  assert.match(navigation, /href=\\"\/pages\/news\.html\\">隴善堂官網（最新公告）<\/a>/);
+  assert.match(home, /id="dashboard-news-title">🔔 隴善堂官網（最新公告）<\/h2>/);
+  assert.match(news, /<h1>隴善堂官網（最新公告）<\/h1>/);
+  assert.doesNotMatch(news, /<h2 id="news-page-title">全部公告<\/h2>/);
+});
