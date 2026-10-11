@@ -51,3 +51,14 @@ test('navigation behavior toggles the scrolled header state', () => {
   assert.match(script, /scrollY/);
   assert.match(script, /aria-expanded/);
 });
+
+test('public pages load the current shared navigation cache key', () => {
+  for (const page of pages.filter(page => page !== 'public/pages/divination.html')) {
+    const html = readFileSync(page, 'utf8');
+    assert.match(
+      html,
+      /<script src="\/navigation\.js\?v=20261011-1"><\/script>/,
+      `${page} must bypass stale navigation labels`
+    );
+  }
+});
