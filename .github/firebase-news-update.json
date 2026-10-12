@@ -1,0 +1,5 @@
+{
+  "firestore": {
+    "rules": ".github/firestore-news-update.rules"
+  }
+}

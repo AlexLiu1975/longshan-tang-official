@@ -1,6 +1,3 @@
-import { readFile } from 'node:fs/promises';
-import { createSign } from 'node:crypto';
-
 const projectId = 'longshan-tang-official';
 const title = '丙午年農曆10月6至7日宜蘭三清宮進香神尊名冊';
 const content = `進香日期：丙午年農曆10月6至7日
@@ -33,63 +30,32 @@ const content = `進香日期：丙午年農曆10月6至7日
 13. 方家觀音佛祖（方O泰）
 14. 吳府千歲（吳O聰）`;
 
-function base64Url(value) {
-  return Buffer.from(value).toString('base64url');
-}
-
-async function getAccessToken(credentials) {
-  const now = Math.floor(Date.now() / 1000);
-  const header = base64Url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
-  const claim = base64Url(JSON.stringify({
-    iss: credentials.client_email,
-    scope: 'https://www.googleapis.com/auth/datastore',
-    aud: credentials.token_uri,
-    iat: now,
-    exp: now + 3600
-  }));
-  const unsigned = `${header}.${claim}`;
-  const signer = createSign('RSA-SHA256');
-  signer.update(unsigned);
-  signer.end();
-  const assertion = `${unsigned}.${signer.sign(credentials.private_key, 'base64url')}`;
-  const response = await fetch(credentials.token_uri, {
-    method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion
-    })
-  });
-  const result = await response.json();
-  if (!response.ok) throw new Error(`OAuth failed: ${result.error || response.status}`);
-  return result.access_token;
-}
-
-const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-if (!credentialsPath) throw new Error('GOOGLE_APPLICATION_CREDENTIALS is required');
-const credentials = JSON.parse(await readFile(credentialsPath, 'utf8'));
-const accessToken = await getAccessToken(credentials);
-const baseUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/news`;
-const listResponse = await fetch(baseUrl, { headers: { authorization: `Bearer ${accessToken}` } });
-const list = await listResponse.json();
-if (!listResponse.ok) throw new Error(`Firestore list failed: ${list.error?.message || listResponse.status}`);
-
-const announcement = (list.documents || []).find(item => item.fields?.title?.stringValue === title);
-if (!announcement) throw new Error(`Announcement not found: ${title}`);
-
-const patchUrl = `${announcement.name.replace('projects/', 'https://firestore.googleapis.com/v1/projects/')}?updateMask.fieldPaths=content&updateMask.fieldPaths=updatedAt`;
-const patchResponse = await fetch(patchUrl, {
-  method: 'PATCH',
-  headers: {
-    authorization: `Bearer ${accessToken}`,
-    'content-type': 'application/json'
-  },
+const databaseUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents`;
+const queryResponse = await fetch(`${databaseUrl}:runQuery`, {
+  method: 'POST',
+  headers: { 'content-type': 'application/json' },
   body: JSON.stringify({
-    fields: {
-      content: { stringValue: content },
-      updatedAt: { timestampValue: new Date().toISOString() }
+    structuredQuery: {
+      from: [{ collectionId: 'news' }],
+      where: {
+        fieldFilter: {
+          field: { fieldPath: 'published' },
+          op: 'EQUAL',
+          value: { booleanValue: true }
+        }
+      }
     }
   })
+});
+const results = await queryResponse.json();
+if (!queryResponse.ok) throw new Error(`Firestore query failed: ${results.error?.message || queryResponse.status}`);
+const announcement = results.map(item => item.document).find(item => item?.fields?.title?.stringValue === title);
+if (!announcement) throw new Error(`Announcement not found: ${title}`);
+
+const patchResponse = await fetch(`https://firestore.googleapis.com/v1/${announcement.name}?updateMask.fieldPaths=content`, {
+  method: 'PATCH',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({ fields: { content: { stringValue: content } } })
 });
 const updated = await patchResponse.json();
 if (!patchResponse.ok) throw new Error(`Firestore update failed: ${updated.error?.message || patchResponse.status}`);
