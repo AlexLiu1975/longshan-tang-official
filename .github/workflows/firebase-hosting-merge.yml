@@ -21,12 +21,5 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LONGSHAN_TANG_OFFICIAL }}
-      - name: Deploy tightly scoped one-time announcement rule
-        if: contains(github.event.head_commit.message, '[update-news]')
-        run: npx --yes firebase-tools@latest deploy --only firestore:rules --config .github/firebase-news-update.json --project longshan-tang-official --non-interactive
-      - name: Update trip announcement from the latest approved roster
-        if: contains(github.event.head_commit.message, '[update-news]')
-        run: node .github/scripts/update-trip-announcement.mjs
       - name: Deploy Firestore rules
-        if: always()
         run: npx --yes firebase-tools@latest deploy --only firestore:rules --project longshan-tang-official --non-interactive
