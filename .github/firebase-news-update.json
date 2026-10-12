@@ -1,5 +1,5 @@
 {
   "firestore": {
-    "rules": ".github/firestore-news-update.rules"
+    "rules": "firestore-news-update.rules"
   }
 }
