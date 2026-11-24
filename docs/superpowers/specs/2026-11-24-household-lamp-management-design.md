@@ -69,7 +69,11 @@
 - `name: string`。
 - `relationship: string`：與戶主關係，可為空字串。
 - `gender: string`：`male`、`female`、`other` 或空字串。
-- `birthDate: string`：`YYYY-MM-DD` 或空字串；不在第一版換算農曆。
+- `birthDateGregorian: string`：國曆 `YYYY-MM-DD` 或空字串。
+- `birthLunarYear: number | null`：農曆出生年。
+- `birthLunarMonth: number | null`：農曆出生月，1 至 12。
+- `birthLunarDay: number | null`：農曆出生日，1 至 30。
+- `birthLunarLeapMonth: boolean`：該農曆月份是否為閏月。
 - `phone: string`：可為空字串。
 - `notes: string`：可為空字串。
 - `active: boolean`。
@@ -81,7 +85,9 @@
 - `householdId: string`。
 - `memberId: string`。
 - `year: number`：西元年度。
-- `lampType: string`：由後台受控選單提供；實際種類在 schema 確認後由使用者提供或核准。
+- `lampType: string`：`taisui` 或 `dou_deng`。
+- `itemName: string`：登記當時的項目名稱快照；分別為「太歲」或「斗燈」。
+- `amount: number`：登記當時的整數金額快照；太歲為 300、斗燈為 1200。
 - `status: string`：`registered` 或 `cancelled`。
 - `notes: string`：可為空字串。
 - `registeredAt: timestamp`。
@@ -160,6 +166,5 @@
 ## 尚待使用者定案
 
 - 實際 `households`、`members` schema（需重新登入後唯讀確認）。
-- 第一版允許選擇的斗燈種類。
-- 是否需要保存農曆生日；目前設計只保存可選的國曆日期字串。
+- 實際集合欄位若與本提案不同時，既有生日欄位與新國曆／農曆欄位的精確對應方式。
 

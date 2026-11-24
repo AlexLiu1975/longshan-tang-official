@@ -38,7 +38,7 @@
 
 **Interfaces:**
 - Consumes: authenticated Firebase CLI access to project `longshan-tang-official`.
-- Produces: approved exact field mapping for `households` and `members`, approved lamp-type list, and a go/no-go decision for implementation.
+- Produces: approved exact field mapping for `households` and `members`, confirmed birthday-field mapping, and a go/no-go decision for implementation.
 
 - [ ] **Step 1: Reauthenticate without exposing credentials**
 
@@ -60,9 +60,9 @@ Expected: every proposed read/write field maps to an existing field or is explic
 
 Update the spec and this plan with exact field names and types, list the differences and risks, and obtain user approval before Task 1. Do not create an implicit compatibility adapter.
 
-- [ ] **Step 5: Confirm lamp types and birthday representation**
+- [x] **Step 5: Confirm lamp types, prices, and birthday representation**
 
-Expected: the spec contains an exact controlled list for `lampType` and states whether `birthDate` is omitted, Gregorian-only, or accompanied by an explicitly defined lunar representation.
+Expected: the spec fixes `taisui`/「太歲」/300 and `dou_deng`/「斗燈」/1200, saves `itemName` and `amount` snapshots on each registration, and stores both Gregorian and full lunar birthday fields including leap-month state.
 
 ### Task 1: Establish the Local Test Harness
 
@@ -120,7 +120,7 @@ git commit -m "test: add firestore rules harness"
 
 - [ ] **Step 1: Write failing normalization and validation tests**
 
-Assert that required names reject whitespace-only values, optional strings trim to `""`, invalid years and unapproved lamp types fail, and `cancelRegistration` preserves identity fields while changing only cancellation metadata and update metadata.
+Assert that required names reject whitespace-only values, optional strings trim to `""`, invalid years, invalid lunar dates, inconsistent empty lunar fields, unapproved lamp types, and mismatched item names or amounts fail; assert `cancelRegistration` preserves identity and price-snapshot fields while changing only cancellation metadata and update metadata.
 
 - [ ] **Step 2: Run the focused tests and verify failure**
 
@@ -172,7 +172,7 @@ Expected: FAIL on missing household controls.
 
 - [ ] **Step 3: Add the HTML panels and forms**
 
-Add only fields approved in Task 0. Keep panels hidden until their tab is selected and use native form controls.
+Add only fields approved in Task 0. The member form must expose a Gregorian date plus lunar year, month, day, and leap-month control. The lamp form must expose only 太歲（300 元）and 斗燈（1,200 元）. Keep panels hidden until their tab is selected and use native form controls.
 
 - [ ] **Step 4: Add responsive styles**
 
@@ -257,7 +257,7 @@ Assert unauthenticated and wrong-email clients cannot list, get, create, update,
 
 - [ ] **Step 2: Add failing validation tests**
 
-Assert rejection of extra fields, wrong types, blank required names, invalid year, unapproved lamp type, invalid status, actor UID mismatch, immutable `memberId`/`householdId` changes, physical deletes, and cancellation updates that modify unrelated fields.
+Assert rejection of extra fields, wrong types, blank required names, invalid registration year, invalid lunar date parts, inconsistent empty lunar fields, unapproved lamp type, mismatched item name or amount, invalid status, actor UID mismatch, immutable `memberId`/`householdId` changes, physical deletes, and cancellation updates that modify unrelated fields.
 
 - [ ] **Step 3: Run Rules tests and verify expected failures**
 
