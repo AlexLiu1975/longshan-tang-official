@@ -39,46 +39,54 @@
 - 管理後台位於 `public/pages/admin.html`，行為集中於 `public/firebase-admin.js`。
 - Firebase Authentication 使用 Google 登入，現行管理員判斷為指定電子郵件。
 - `firestore.rules` 目前只涵蓋 `contact_messages`、`news`、`site_stats`。
-- `households` 與 `members` 已存在，但目前 Firebase CLI 憑證已過期，尚未取得欄位名稱與型別。
+- `households` 與 `members` 已存在；2026-11-25 已在不輸出文件 ID 或欄位值的前提下，唯讀確認一筆代表文件的欄位名稱與 Firestore 型別。
 - 個資不得出現在測試 fixture、終端輸出、Git commit 或文件內。
 
 ## Schema 確認硬性關卡
 
-開始產品程式修改前，管理員需重新驗證 Firebase CLI。主代理只可讀取最多三筆文件的欄位名稱與 Firestore 型別，不輸出文件 ID 或欄位值。
+管理員已重新驗證 Firebase CLI。唯讀檢查顯示實際 schema 與原提案不同，因此產品實作暫停，等待下列相容設計再次核准；不建立隱性相容層、不猜測既有生日欄位的曆法含義。
 
-若實際欄位與下列提案不同，停止實作，更新本設計與實作計畫並再次取得核准；不建立隱性相容層、不猜測欄位含義。
-
-## 提案資料模型
-
-實際欄位須通過上述關卡後定案。
+## 已確認資料模型與相容提案
 
 ### `households`
 
+已確認既有欄位：
+
 - `headName: string`：戶主或主要聯絡人姓名。
-- `phone: string`：聯絡電話，可為空字串。
-- `address: string`：聯絡地址，可為空字串。
-- `notes: string`：內部備註，可為空字串。
-- `active: boolean`：是否有效。
+- `phone: string`：提案在 UI 標示為手機；需使用者核准此語意。
+- `telephone: string`：提案在 UI 標示為市內電話；需使用者核准此語意。
+- `email: string`。
+- `address: string`。
+- `active: boolean`。
 - `createdAt: timestamp`。
-- `updatedAt: timestamp`。
-- `createdBy: string`、`updatedBy: string`：管理員 UID。
+
+相容新增欄位：
+
+- `notes: string`：內部備註，可為空字串。
+- `updatedAt: timestamp`、`updatedBy: string`。
+- 新文件另存 `createdBy: string`；既有文件不回填或偽造原建立者。
 
 ### `members`
 
-- `householdId: string`：所屬家庭文件 ID。
-- `name: string`。
-- `relationship: string`：與戶主關係，可為空字串。
-- `gender: string`：`male`、`female`、`other` 或空字串。
-- `birthDateGregorian: string`：國曆 `YYYY-MM-DD` 或空字串。
-- `birthLunarYear: number | null`：農曆出生年。
-- `birthLunarMonth: number | null`：農曆出生月，1 至 12。
-- `birthLunarDay: number | null`：農曆出生日，1 至 30。
-- `birthLunarLeapMonth: boolean`：該農曆月份是否為閏月。
-- `phone: string`：可為空字串。
-- `notes: string`：可為空字串。
-- `active: boolean`。
-- `createdAt: timestamp`、`updatedAt: timestamp`。
-- `createdBy: string`、`updatedBy: string`。
+已確認既有欄位：
+
+- `householdId: string`、`name: string`、`relationship: string`、`gender: string`。
+- `address: string`、`sameAddress: boolean`。
+- `calendarType: string`。
+- `birthYear: integer`、`birthMonth: integer`、`birthDay: integer | null`。
+- `isLeapMonth: boolean`、`birthHour: string`。
+- `active: boolean`、`createdAt: timestamp`。
+
+既有 `calendarType` 的值與 `birthYear/Month/Day` 所代表的曆法尚未讀取，禁止自動解讀或轉換。相容新增欄位：
+
+- `birthDateGregorian: string`：管理員確認後輸入的國曆 `YYYY-MM-DD`。
+- `birthLunarYear: number | null`、`birthLunarMonth: number | null`、`birthLunarDay: number | null`。
+- `birthLunarLeapMonth: boolean`。
+- `phone: string`、`notes: string`：可為空字串。
+- `updatedAt: timestamp`、`updatedBy: string`。
+- 新文件另存 `createdBy: string`；既有文件不回填或偽造原建立者。
+
+編輯既有成員時，後台將舊生日欄位以「既有資料」唯讀顯示，不自動填入新雙曆欄位。管理員必須人工確認國曆與農曆後才能保存雙曆資料；保存時不刪除或改寫舊生日欄位。
 
 ### `lampRegistrations`
 
@@ -147,6 +155,7 @@
 - 客戶端搜尋不得把個資送到第三方服務。
 - UI 不提供實體刪除家庭、成員或斗燈的操作；停用及取消均保留紀錄。
 - 正式部署前保存目前 Rules 的 Git 版本；若部署失敗，可由上一個 commit 回復。
+- Rules 必須同時允許尚未具有新增欄位的既有文件，以及包含完整稽核欄位的新文件；既有文件第一次編輯後必須取得 `updatedAt`、`updatedBy`，但不強制偽造 `createdBy`。
 
 ## 錯誤處理
 
@@ -165,6 +174,6 @@
 
 ## 尚待使用者定案
 
-- 實際 `households`、`members` schema（需重新登入後唯讀確認）。
-- 實際集合欄位若與本提案不同時，既有生日欄位與新國曆／農曆欄位的精確對應方式。
+- 是否核准將 `households.phone` 顯示為「手機」、`households.telephone` 顯示為「市內電話」。
+- 是否核准保留既有生日欄位、禁止自動轉換，並由管理員人工確認後另存新雙曆欄位。
 

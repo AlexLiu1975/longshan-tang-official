@@ -40,25 +40,25 @@
 - Consumes: authenticated Firebase CLI access to project `longshan-tang-official`.
 - Produces: approved exact field mapping for `households` and `members`, confirmed birthday-field mapping, and a go/no-go decision for implementation.
 
-- [ ] **Step 1: Reauthenticate without exposing credentials**
+- [x] **Step 1: Reauthenticate without exposing credentials**
 
 Run: `firebase login --reauth`
 
 Expected: CLI reports the intended administrator account. User completes any browser authentication directly.
 
-- [ ] **Step 2: Read only schema shapes**
+- [x] **Step 2: Read only schema shapes**
 
 Use the authenticated Firestore REST API to inspect at most three documents per collection and output only field names and Firestore value-type keys. Do not output document paths, IDs, or values.
 
-Expected: a field/type inventory for `households` and `members` containing no personal data.
+Expected: a field/type inventory for `households` and `members` containing no personal data. Completed with one representative document from each collection; no document ID or value was printed.
 
-- [ ] **Step 3: Compare the inventory with the proposed model**
+- [x] **Step 3: Compare the inventory with the proposed model**
 
-Expected: every proposed read/write field maps to an existing field or is explicitly identified as a new field.
+Expected: every proposed read/write field maps to an existing field or is explicitly identified as a new field. Differences are recorded in the spec: household phone/email fields, member address fields, legacy single-calendar birthday fields, and missing update/audit fields.
 
-- [ ] **Step 4: Stop for approval if anything differs**
+- [x] **Step 4: Stop for approval if anything differs**
 
-Update the spec and this plan with exact field names and types, list the differences and risks, and obtain user approval before Task 1. Do not create an implicit compatibility adapter.
+The spec now preserves all legacy fields, proposes explicit additive fields, forbids automatic interpretation of the legacy calendar data, and stops before Task 1 for renewed user approval.
 
 - [x] **Step 5: Confirm lamp types, prices, and birthday representation**
 
@@ -120,7 +120,7 @@ git commit -m "test: add firestore rules harness"
 
 - [ ] **Step 1: Write failing normalization and validation tests**
 
-Assert that required names reject whitespace-only values, optional strings trim to `""`, invalid years, invalid lunar dates, inconsistent empty lunar fields, unapproved lamp types, and mismatched item names or amounts fail; assert `cancelRegistration` preserves identity and price-snapshot fields while changing only cancellation metadata and update metadata.
+Assert that required names reject whitespace-only values, optional strings trim to `""`, invalid years, invalid lunar dates, inconsistent empty lunar fields, unapproved lamp types, and mismatched item names or amounts fail; assert legacy birthday fields are preserved unchanged; assert `cancelRegistration` preserves identity and price-snapshot fields while changing only cancellation metadata and update metadata.
 
 - [ ] **Step 2: Run the focused tests and verify failure**
 
@@ -172,7 +172,7 @@ Expected: FAIL on missing household controls.
 
 - [ ] **Step 3: Add the HTML panels and forms**
 
-Add only fields approved in Task 0. The member form must expose a Gregorian date plus lunar year, month, day, and leap-month control. The lamp form must expose only 太歲（300 元）and 斗燈（1,200 元）. Keep panels hidden until their tab is selected and use native form controls.
+Add only fields approved in Task 0. The household form must preserve `phone`, `telephone`, and `email`. The member form must show legacy calendar fields read-only when present, plus editable Gregorian date and lunar year, month, day, and leap-month controls. The lamp form must expose only 太歲（300 元）and 斗燈（1,200 元）. Keep panels hidden until their tab is selected and use native form controls.
 
 - [ ] **Step 4: Add responsive styles**
 
@@ -257,7 +257,7 @@ Assert unauthenticated and wrong-email clients cannot list, get, create, update,
 
 - [ ] **Step 2: Add failing validation tests**
 
-Assert rejection of extra fields, wrong types, blank required names, invalid registration year, invalid lunar date parts, inconsistent empty lunar fields, unapproved lamp type, mismatched item name or amount, invalid status, actor UID mismatch, immutable `memberId`/`householdId` changes, physical deletes, and cancellation updates that modify unrelated fields.
+Assert rejection of extra fields, wrong types, blank required names, invalid registration year, invalid lunar date parts, inconsistent empty lunar fields, unapproved lamp type, mismatched item name or amount, invalid status, actor UID mismatch, immutable `memberId`/`householdId` changes, legacy birthday-field removal or mutation, physical deletes, and cancellation updates that modify unrelated fields.
 
 - [ ] **Step 3: Run Rules tests and verify expected failures**
 
