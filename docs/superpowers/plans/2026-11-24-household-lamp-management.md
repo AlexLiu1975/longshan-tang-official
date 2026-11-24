@@ -81,7 +81,7 @@ Create `tests/firestore-rules/firestore-rules.test.mjs` with one test named `una
 
 - [ ] **Step 2: Add test dependencies and scripts**
 
-Create `package.json` with `type: "module"`, `test: "node --test tests/*.test.mjs"`, `test:rules: "firebase emulators:exec --only firestore --project demo-longshan-tang 'node --test tests/firestore-rules/firestore-rules.test.mjs'"`, and exact dev dependencies `@firebase/rules-unit-testing: "5.0.0"` and `firebase: "12.18.0"`; both support Node 20 and match the browser SDK major version.
+Create `package.json` without a root `type` override, with `test: "node --test tests/*.test.mjs"`, `test:rules: "firebase emulators:exec --only firestore --project demo-longshan-tang 'node --test tests/firestore-rules/firestore-rules.test.mjs'"`, and exact dev dependencies `@firebase/rules-unit-testing: "5.0.0"` and `firebase: "12.18.0"`; both support Node 20 and match the browser SDK major version. A root `type: "module"` is forbidden because existing tests load `public/vendor/lunar.js` as CommonJS.
 
 - [ ] **Step 3: Install dependencies**
 
@@ -111,7 +111,7 @@ git commit -m "test: add firestore rules harness"
 ### Task 2: Implement Pure Household and Lamp Domain Rules
 
 **Files:**
-- Create: `public/admin-households-core.js`
+- Create: `public/admin-households-core.mjs`
 - Create: `tests/admin-households-core.test.mjs`
 
 **Interfaces:**
@@ -126,7 +126,7 @@ Assert that required names reject whitespace-only values, optional strings trim 
 
 Run: `node --test tests/admin-households-core.test.mjs`
 
-Expected: FAIL because `public/admin-households-core.js` does not exist.
+Expected: FAIL because `public/admin-households-core.mjs` does not exist.
 
 - [ ] **Step 3: Implement the exported pure functions**
 
@@ -145,7 +145,7 @@ Expected: PASS.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add public/admin-households-core.js tests/admin-households-core.test.mjs
+git add public/admin-households-core.mjs tests/admin-households-core.test.mjs
 git commit -m "feat: add household domain validation"
 ```
 

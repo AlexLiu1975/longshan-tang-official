@@ -140,7 +140,7 @@
 
 ## 模組邊界
 
-- `public/admin-households-core.js`：純函式，負責正規化、驗證、搜尋、唯一鍵及狀態轉換，不直接操作 DOM 或 Firebase。
+- `public/admin-households-core.mjs`：純 ES module 函式，負責正規化、驗證、搜尋、唯一鍵及狀態轉換，不直接操作 DOM 或 Firebase；使用 `.mjs` 避免改變既有 CommonJS 測試載入語意。
 - `public/firebase-households-admin.js`：家庭、成員與斗燈的 Firestore 操作及 UI 綁定。
 - `public/firebase-admin.js`：保留登入、留言與公告，登入成功後初始化新模組。
 - `public/pages/admin.html`：新增頁籤與語意化表單容器。
