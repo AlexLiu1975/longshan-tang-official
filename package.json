@@ -1,0 +1,12 @@
+{
+  "name": "longshan-tang-official",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-longshan-tang 'node --test tests/firestore-rules/firestore-rules.test.mjs'"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "5.0.0",
+    "firebase": "12.18.0"
+  }
+}
