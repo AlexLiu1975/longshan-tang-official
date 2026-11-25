@@ -1,3 +1,4 @@
+import { initializeHouseholdAdmin } from './firebase-households-admin.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -27,6 +28,7 @@ const messagesList = $('#messages-list');
 const messageSummary = $('#message-summary');
 const newsList = $('#news-admin-list');
 const newsStatus = $('#news-status');
+const householdAdmin = initializeHouseholdAdmin(db);
 let currentMessages = [];
 let currentNews = [];
 
@@ -66,11 +68,13 @@ onAuthStateChanged(auth, async user => {
     loginPanel.hidden = true;
     adminApp.hidden = false;
     adminUser.textContent = `已登入：${user.email}`;
+    householdAdmin.setUser(user);
     await Promise.all([loadMessages(), loadNews()]);
   } else {
     adminApp.hidden = true;
     loginPanel.hidden = false;
     adminUser.textContent = '';
+    householdAdmin.setUser(null);
   }
 });
 
@@ -79,8 +83,10 @@ document.querySelectorAll('.admin-tab').forEach(button => {
     document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
     const tab = button.dataset.tab;
-    $('#tab-messages').hidden = tab !== 'messages';
-    $('#tab-news').hidden = tab !== 'news';
+    document.querySelectorAll('.admin-panel').forEach(panel => {
+      panel.hidden = panel.id !== `tab-${tab}`;
+    });
+    if (tab === 'lamps') householdAdmin.loadRegistrations();
   });
 });
 

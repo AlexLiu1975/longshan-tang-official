@@ -78,7 +78,7 @@ export function validateMember(input = {}) {
 
   const lunar = [input.birthLunarYear, input.birthLunarMonth, input.birthLunarDay];
   const presentCount = lunar.filter(value => value !== null && value !== '' && value !== undefined).length;
-  if (presentCount > 0 && presentCount < 3) {
+  if ((presentCount > 0 && presentCount < 3) || (presentCount === 0 && input.birthLunarLeapMonth === true)) {
     errors.push('birthLunar.incomplete');
   } else if (presentCount === 3) {
     const [year, month, day] = lunar.map(Number);
@@ -140,7 +140,7 @@ export function matchesHouseholdSearch(household = {}, members = [], term = '') 
 }
 
 function registrationPart(value) {
-  return encodeURIComponent(normalizeSearchTerm(value)).replaceAll('%', '~');
+  return encodeURIComponent(trim(value)).replaceAll('%', '~');
 }
 
 export function makeRegistrationId(memberId, year, lampType) {
@@ -155,6 +155,17 @@ export function cancelRegistration(registration, actorUid, timestamp) {
     updatedAt: timestamp,
     updatedBy: actorUid
   };
+}
+
+export function validPayment(amount, amountPaid, paidOn) {
+  return Number.isInteger(amountPaid) && amountPaid >= 0 && amountPaid <= amount &&
+    (amountPaid === 0 ? paidOn === '' : Boolean(paidOn) && isGregorianDate(paidOn));
+}
+
+export function paymentStatus({ amount, amountPaid, paidOn }) {
+  if (!validPayment(amount, amountPaid, paidOn)) return 'unknown';
+  if (amountPaid === 0) return 'unpaid';
+  return amountPaid === amount ? 'paid' : 'partial';
 }
 
 export { LAMP_ITEMS };

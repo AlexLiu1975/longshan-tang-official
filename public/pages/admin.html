@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#541617" />
   <meta name="robots" content="noindex,nofollow" />
   <title>隴善堂管理後台</title>
-  <link rel="stylesheet" href="/admin.css?v=20260829-2" />
+  <link rel="stylesheet" href="/admin.css?v=20261125-2" />
 </head>
 <body class="admin-body">
   <main>
@@ -28,6 +28,8 @@
         <nav class="admin-nav" role="tablist" aria-label="後台功能">
           <button class="admin-tab active" data-tab="messages" type="button">📩 <span>信眾留言</span></button>
           <button class="admin-tab" data-tab="news" type="button">📣 <span>最新公告</span></button>
+          <button class="admin-tab" data-tab="households" type="button">👪 <span>家庭資料</span></button>
+          <button class="admin-tab" data-tab="lamps" type="button">🪔 <span>斗燈登記</span></button>
           <a class="admin-link" href="/">🏠 <span>返回官方網站</span></a>
         </nav>
 
@@ -41,7 +43,7 @@
         <div class="admin-topbar">
           <div>
             <h1>管理中心</h1>
-            <p>管理信眾留言與隴善堂最新公告</p>
+            <p>管理信眾留言、公告、家庭資料與斗燈登記</p>
           </div>
           <span class="admin-topbar-badge">隴善堂 Official Admin</span>
         </div>
@@ -74,10 +76,127 @@
           </form>
           <div id="news-admin-list" class="admin-list"><p class="admin-empty">正在載入公告…</p></div>
         </section>
+
+        <section id="tab-households" class="admin-panel" hidden>
+          <div class="admin-panel-head">
+            <div><h2>家庭資料</h2><p>搜尋家庭與成員，確認無重複後再建立新資料。</p></div>
+            <button id="new-household" class="btn primary" type="button">建立家庭</button>
+          </div>
+
+          <form id="household-search-form" class="admin-filter-form">
+            <label for="household-search">搜尋姓名、電話、Email 或地址</label>
+            <div class="admin-search-row">
+              <input id="household-search" type="search" autocomplete="off" maxlength="120" />
+              <button class="btn admin-secondary" type="submit">搜尋</button>
+            </div>
+          </form>
+          <p id="household-status" class="contact-status" role="status" aria-live="polite"></p>
+          <div id="household-search-results" class="admin-list"><p class="admin-empty">請輸入條件搜尋家庭。</p></div>
+
+          <div id="household-editor" class="admin-workspace" hidden>
+            <form id="household-form" class="admin-form">
+              <input id="household-id" type="hidden" />
+              <div class="admin-subhead"><h3>家庭資料</h3><button id="household-close" class="btn admin-secondary" type="button">關閉</button></div>
+              <div class="form-row">
+                <label for="household-head-name">戶主／主要聯絡人<input id="household-head-name" type="text" maxlength="80" required /></label>
+                <label for="household-phone">手機<input id="household-phone" type="tel" maxlength="30" /></label>
+              </div>
+              <div class="form-row">
+                <label for="household-telephone">市內電話<input id="household-telephone" type="tel" maxlength="30" /></label>
+                <label for="household-email">Email<input id="household-email" type="email" maxlength="160" /></label>
+              </div>
+              <label for="household-address">地址<input id="household-address" type="text" maxlength="240" /></label>
+              <label for="household-notes">內部備註<textarea id="household-notes" rows="3" maxlength="1000"></textarea></label>
+              <div class="admin-checks"><label for="household-active"><input id="household-active" type="checkbox" checked /> 家庭資料有效</label></div>
+              <div class="admin-actions"><button id="household-save" class="btn primary" type="submit">儲存家庭</button></div>
+            </form>
+
+            <div class="admin-workspace-grid">
+              <section class="admin-subpanel" aria-labelledby="member-list-title">
+                <div class="admin-subhead"><h3 id="member-list-title">家庭成員</h3><button id="new-member" class="btn admin-secondary" type="button">新增成員</button></div>
+                <div id="member-list" class="admin-list"><p class="admin-empty">儲存家庭後即可新增成員。</p></div>
+              </section>
+
+              <section id="member-editor" class="admin-subpanel" aria-labelledby="member-editor-title" hidden>
+                <form id="member-form" class="admin-form admin-form-plain">
+                  <input id="member-id" type="hidden" />
+                  <h3 id="member-editor-title">成員資料</h3>
+                  <div class="form-row">
+                    <label for="member-name">姓名<input id="member-name" type="text" maxlength="80" required /></label>
+                    <label for="member-relationship">與戶主關係<input id="member-relationship" type="text" maxlength="40" /></label>
+                  </div>
+                  <div class="form-row">
+                    <label for="member-gender">性別<select id="member-gender"><option value="">未填寫</option><option value="male">男</option><option value="female">女</option><option value="other">其他</option></select></label>
+                    <label for="member-phone">電話<input id="member-phone" type="tel" maxlength="30" /></label>
+                  </div>
+                  <label for="member-address">成員地址<input id="member-address" type="text" maxlength="240" /></label>
+                  <div class="admin-checks"><label for="member-same-address"><input id="member-same-address" type="checkbox" /> 與家庭地址相同</label></div>
+                  <div class="legacy-data-box"><strong>既有生日資料</strong><p id="member-legacy-birthday" aria-live="polite">無既有資料；系統不會自動解讀或換算。</p></div>
+                  <div class="form-row">
+                    <label for="member-birth-gregorian">國曆生日<input id="member-birth-gregorian" type="date" /></label>
+                    <label for="member-birth-hour">出生時辰<input id="member-birth-hour" type="text" maxlength="20" /></label>
+                  </div>
+                  <fieldset class="admin-fieldset">
+                    <legend>農曆生日</legend>
+                    <div class="lunar-date-grid">
+                      <label for="member-birth-lunar-year">年<input id="member-birth-lunar-year" type="number" min="1800" max="2200" /></label>
+                      <label for="member-birth-lunar-month">月<input id="member-birth-lunar-month" type="number" min="1" max="12" /></label>
+                      <label for="member-birth-lunar-day">日<input id="member-birth-lunar-day" type="number" min="1" max="30" /></label>
+                      <label for="member-birth-lunar-leap" class="check-label"><input id="member-birth-lunar-leap" type="checkbox" /> 閏月</label>
+                    </div>
+                  </fieldset>
+                  <label for="member-notes">內部備註<textarea id="member-notes" rows="3" maxlength="1000"></textarea></label>
+                  <div class="admin-checks"><label for="member-active"><input id="member-active" type="checkbox" checked /> 成員資料有效</label></div>
+                  <div class="admin-actions"><button id="member-save" class="btn primary" type="submit">儲存成員</button><button id="member-cancel" class="btn admin-secondary" type="button">取消編輯</button></div>
+                  <p id="member-status" class="contact-status" role="status" aria-live="polite"></p>
+                </form>
+              </section>
+            </div>
+
+            <form id="lamp-registration-form" class="admin-form">
+              <h3>辦理斗燈／太歲</h3>
+              <div class="form-row">
+                <label for="lamp-member">成員<select id="lamp-member" required><option value="">請選擇成員</option></select></label>
+                <label for="lamp-year">民國年度<input id="lamp-year" type="number" min="89" max="289" required /></label>
+              </div>
+              <label for="lamp-type">項目<select id="lamp-type" required><option value="">請選擇</option><option value="taisui">太歲（300 元）</option><option value="dou_deng">斗燈（1,200 元）</option></select></label>
+              <label for="lamp-notes">登記備註<textarea id="lamp-notes" rows="3" maxlength="1000"></textarea></label>
+              <div class="admin-actions"><button id="lamp-save" class="btn primary" type="submit">建立登記</button></div>
+              <p id="lamp-status" class="contact-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </section>
+
+        <section id="tab-lamps" class="admin-panel" hidden>
+          <div class="admin-panel-head"><div><h2>斗燈登記總表</h2><p>依年度、姓名、項目、登記及繳費狀態查詢歷年紀錄。</p></div></div>
+          <form id="lamp-filters-form" class="admin-filter-grid">
+            <label for="lamp-filter-year">民國年度<input id="lamp-filter-year" type="number" min="89" max="289" /></label>
+            <label for="lamp-filter-type">項目<select id="lamp-filter-type"><option value="">全部</option><option value="taisui">太歲</option><option value="dou_deng">斗燈</option></select></label>
+            <label for="lamp-filter-status">狀態<select id="lamp-filter-status"><option value="">全部</option><option value="registered">有效</option><option value="cancelled">已取消</option></select></label>
+            <label for="lamp-filter-payment">繳費<select id="lamp-filter-payment"><option value="">全部</option><option value="unknown">未確認</option><option value="unpaid">未繳</option><option value="partial">部分繳費</option><option value="paid">已繳清</option></select></label>
+            <label for="lamp-filter-name">姓名<input id="lamp-filter-name" type="search" maxlength="80" /></label>
+            <button class="btn admin-secondary" type="submit">套用篩選</button>
+          </form>
+          <form id="lamp-payment-form" class="admin-form" hidden>
+            <h3>修改繳費資料</h3>
+            <p id="lamp-payment-registration"></p>
+            <div class="form-row">
+              <label for="lamp-amount-paid">實收金額<input id="lamp-amount-paid" type="number" min="0" step="1" required /></label>
+              <label for="lamp-paid-on">最近收款日期<input id="lamp-paid-on" type="date" /></label>
+            </div>
+            <div class="admin-actions">
+              <button class="btn primary" type="submit">儲存繳費</button>
+              <button class="btn admin-secondary" id="lamp-payment-close" type="button">關閉</button>
+            </div>
+            <p id="lamp-payment-status" class="contact-status" role="status" aria-live="polite"></p>
+          </form>
+          <p id="lamp-list-status" class="contact-status" role="status" aria-live="polite"></p>
+          <div id="lamp-registration-list" class="admin-list"><p class="admin-empty">正在載入登記資料…</p></div>
+        </section>
       </div>
     </section>
   </main>
 
-  <script type="module" src="/firebase-admin.js?v=20260829-2"></script>
+  <script type="module" src="/firebase-admin.js?v=20261125-2"></script>
 </body>
 </html>

@@ -82,6 +82,7 @@ test('member validation rejects incomplete or impossible dual-calendar birthdays
     validateMember({ ...base, birthDateGregorian: '2024-02-30' }),
     ['birthDateGregorian.invalid']
   );
+  assert.deepEqual(validateMember({ ...base, birthLunarLeapMonth: true }), ['birthLunar.incomplete']);
   assert.deepEqual(
     validateMember({
       ...base,
@@ -183,4 +184,16 @@ test('registration IDs are deterministic and contain no path separators', () => 
     makeRegistrationId('member / 1', 2027, ' dou_deng ')
   );
   assert.doesNotMatch(makeRegistrationId('member / 1', 2027, 'dou_deng'), /\//);
+});
+
+test('payment status preserves unknown legacy records and validates cumulative receipts', async () => {
+  const { paymentStatus, validPayment } = await import('../public/admin-households-core.mjs');
+  assert.equal(paymentStatus({ amount: 1200 }), 'unknown');
+  assert.equal(paymentStatus({ amount: 1200, amountPaid: 0, paidOn: '' }), 'unpaid');
+  assert.equal(paymentStatus({ amount: 1200, amountPaid: 500, paidOn: '2027-01-10' }), 'partial');
+  assert.equal(paymentStatus({ amount: 1200, amountPaid: 1200, paidOn: '2027-01-10' }), 'paid');
+  assert.equal(validPayment(1200, 1201, '2027-01-10'), false);
+  assert.equal(validPayment(1200, 500, '2027-02-30'), false);
+  assert.equal(validPayment(1200, 500, ''), false);
+  assert.equal(makeRegistrationId('MixedCaseID', 2027, 'dou_deng'), 'MixedCaseID_2027_dou_deng');
 });

@@ -6,6 +6,103 @@ service cloud.firestore {
         request.auth.token.email == 'beyle931224@gmail.com';
     }
 
+    function isPersonalAdmin() {
+      return isAdmin() && request.auth.token.email_verified == true &&
+        request.auth.token.firebase.sign_in_provider == 'google.com';
+    }
+
+    function validAudit(data) {
+      return data.updatedBy == request.auth.uid && data.updatedAt == request.time;
+    }
+
+    function shortText(value, max) {
+      return value is string && value.size() <= max;
+    }
+
+    function validHousehold(data) {
+      return data.headName is string && data.headName.size() > 0 && data.headName.size() <= 80 &&
+        shortText(data.phone, 30) && shortText(data.telephone, 30) &&
+        shortText(data.email, 160) && shortText(data.address, 240) &&
+        shortText(data.notes, 1000) && data.active is bool && validAudit(data);
+    }
+
+    match /households/{householdId} {
+      allow read: if isPersonalAdmin();
+      allow create: if isPersonalAdmin() &&
+        request.resource.data.keys().hasOnly(['headName', 'phone', 'telephone', 'email', 'address', 'notes', 'active', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy']) &&
+        request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time &&
+        validHousehold(request.resource.data);
+      allow update: if isPersonalAdmin() &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['headName', 'phone', 'telephone', 'email', 'address', 'notes', 'active', 'updatedAt', 'updatedBy']) &&
+        validHousehold(request.resource.data);
+      allow delete: if false;
+    }
+
+    function validLunar(data) {
+      return data.birthLunarLeapMonth is bool &&
+        ((data.birthLunarYear == null && data.birthLunarMonth == null && data.birthLunarDay == null && data.birthLunarLeapMonth == false) ||
+         (data.birthLunarYear is int && data.birthLunarYear >= 1800 && data.birthLunarYear <= 2200 &&
+          data.birthLunarMonth is int && data.birthLunarMonth >= 1 && data.birthLunarMonth <= 12 &&
+          data.birthLunarDay is int && data.birthLunarDay >= 1 && data.birthLunarDay <= 30));
+    }
+
+    function validMember(data) {
+      return data.householdId is string && data.householdId.size() > 0 &&
+        exists(/databases/$(database)/documents/households/$(data.householdId)) &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 80 &&
+        shortText(data.relationship, 40) && shortText(data.gender, 30) &&
+        shortText(data.address, 240) && data.sameAddress is bool &&
+        shortText(data.birthDateGregorian, 10) && validLunar(data) &&
+        shortText(data.phone, 30) && shortText(data.notes, 1000) &&
+        data.active is bool && validAudit(data);
+    }
+
+    match /members/{memberId} {
+      allow read: if isPersonalAdmin();
+      allow create: if isPersonalAdmin() &&
+        request.resource.data.keys().hasOnly(['householdId', 'name', 'relationship', 'gender', 'address', 'sameAddress', 'birthHour', 'birthDateGregorian', 'birthLunarYear', 'birthLunarMonth', 'birthLunarDay', 'birthLunarLeapMonth', 'phone', 'notes', 'active', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy']) &&
+        shortText(request.resource.data.birthHour, 20) && request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time && validMember(request.resource.data);
+      allow update: if isPersonalAdmin() &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'relationship', 'gender', 'address', 'sameAddress', 'birthDateGregorian', 'birthLunarYear', 'birthLunarMonth', 'birthLunarDay', 'birthLunarLeapMonth', 'phone', 'notes', 'active', 'updatedAt', 'updatedBy']) &&
+        validMember(request.resource.data);
+      allow delete: if false;
+    }
+
+    function validPayment(data) {
+      return !data.keys().hasAny(['amountPaid', 'paidOn']) ||
+        (data.amountPaid is int && data.amountPaid >= 0 && data.amountPaid <= data.amount &&
+          data.paidOn is string &&
+          ((data.amountPaid == 0 && data.paidOn == '') ||
+           (data.amountPaid > 0 && data.paidOn.matches('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'))));
+    }
+
+    function validRegistration(data, registrationId) {
+      return data.keys().hasOnly(['householdId', 'memberId', 'year', 'lampType', 'itemName', 'amount', 'amountPaid', 'paidOn', 'status', 'notes', 'registeredAt', 'cancelledAt', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy']) &&
+        data.householdId is string && data.memberId is string && data.memberId.matches('^[A-Za-z0-9_-]+$') &&
+        data.year is int && data.year >= 2000 && data.year <= 2200 &&
+        registrationId == data.memberId + '_' + string(data.year) + '_' + data.lampType &&
+        exists(/databases/$(database)/documents/members/$(data.memberId)) &&
+        get(/databases/$(database)/documents/members/$(data.memberId)).data.householdId == data.householdId &&
+        ((data.lampType == 'taisui' && data.itemName == '太歲' && data.amount == 300) ||
+         (data.lampType == 'dou_deng' && data.itemName == '斗燈' && data.amount == 1200)) &&
+        validPayment(data) && shortText(data.notes, 1000) && data.createdAt is timestamp && data.registeredAt is timestamp &&
+        data.createdBy is string && validAudit(data);
+    }
+
+    match /lampRegistrations/{registrationId} {
+      allow read: if isPersonalAdmin();
+      allow create: if isPersonalAdmin() && validRegistration(request.resource.data, registrationId) &&
+        request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time && request.resource.data.registeredAt == request.time && request.resource.data.status == 'registered' && request.resource.data.cancelledAt == null;
+      allow update: if isPersonalAdmin() && validRegistration(request.resource.data, registrationId) &&
+        resource.data.status == 'registered' &&
+        ((request.resource.data.status == 'registered' &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['notes', 'amountPaid', 'paidOn', 'updatedAt', 'updatedBy']) &&
+          (!resource.data.keys().hasAll(['amountPaid', 'paidOn']) || request.resource.data.keys().hasAll(['amountPaid', 'paidOn']))) ||
+         (request.resource.data.status == 'cancelled' && request.resource.data.cancelledAt == request.time &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'cancelledAt', 'updatedAt', 'updatedBy'])));
+      allow delete: if false;
+    }
+
     match /contact_messages/{messageId} {
       allow create: if
         request.resource.data.keys().hasOnly(['name', 'contact', 'category', 'message', 'status', 'createdAt', 'source']) &&
